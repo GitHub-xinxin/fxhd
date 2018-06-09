@@ -1,0 +1,123 @@
+{template 'common/header'}
+<style>
+  table tr:hover{
+    background: #3498db;
+    color: #fff;
+    -webkit-transition: all 0.2s;
+  }
+  .ava_img{
+        height: 2em;
+        width: 2em;
+        border-radius: 50%
+    }
+</style>
+<ul class="nav nav-tabs">
+  <li {if $thistype==0}class="active"{/if}>
+    <a href="{php echo $this->createWebUrl('goods',array('sid'=>$sid))}">用户列表</a>
+  </li>
+  
+  <!-- <li {if $thistype==1||$thistype==2}class="active"{/if}>
+    {if $thistype==2}
+      <a class="disabled">
+        更新商品
+      </a>
+    {else}
+      <a href="{php echo $this->createWebUrl('goods',array('gid'=>-1,'sid'=>$sid))}">
+        添加商品
+      </a>
+    {/if}
+  </li> -->
+</ul>
+<p style="text-align: center;font-size: 20px;">
+  <span class="label label-info">{$shopname}</span>
+</p>
+{if $thistype==1||$thistype==2}
+<style>
+</style>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <form class="form-horizontal" method="post">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">用户头像</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="name" value="{$onec['name']}"  placeholder="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">用户名称</label>
+        <div class="col-sm-10">
+          <select class="form-control" name="category">
+        {loop $activityarr $i $v}
+            <option {if $onec['category']==$i }selected{/if} >{$v}</option>
+        {/loop}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">用户手机号</label>
+        <div class="col-sm-10">
+          {php echo tpl_form_field_image('banner',$onec['banner']);}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">奖金</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="price" value="{$onec['price']}"  placeholder="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">商品详情</label>
+        <div class="col-sm-10">
+          {php echo tpl_ueditor("details",$onec['details'])}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <input type="hidden" name="token" value="{$_W['token']}" >
+          <input type="hidden" name="shopid" value="{$sid}" >
+          <button type="submit" class="btn btn-default">确定</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{else}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>头像</th>
+          <th>昵称</th>
+          <th>手机号</th>
+          <th>奖金</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {loop $userlist $i $v}
+          <tr>
+            <td>{$v['nickname']}</td>
+            <td><img class="ava_img" src="{$v['avatar']}" alt=""></td>
+            <td>{$v['phone']}</td>
+            <td>{$v['bonus']}</td>
+            <td>
+              <!-- <a href="{php echo $this->createWebUrl('activity',array('gid'=>$v['id']));}" class="btn btn-success">活动</a>
+              <a href="{php echo $this->createWebUrl('goods',array('gid'=>$v['id'],'sid'=>$sid,'bainji'=>1));}" class="btn btn-warning">编辑</a> -->
+              <button type="button" onclick="deleate({$v['id']})" class="btn btn-danger">删除</a>
+            </td>
+          </tr>
+        {/loop}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  function deleate(id){
+    if(confirm("是否确认删除?")){
+      window.location.href="{php echo $this->createWebUrl('goods',array('shanchu'=>1,'sid'=>$sid));}&gid="+id
+    }
+  }
+</script>
+{/if}
+{template 'common/footer'}

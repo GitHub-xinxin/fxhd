@@ -1,0 +1,176 @@
+{template 'common/header'}
+<style>
+	table tr:hover{
+		background: #3498db;
+		color: #fff;
+		-webkit-transition: all 0.2s;
+		
+	}
+	tr,th,td{
+		text-align: center
+	}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $thistype==0}class="active"{/if}>
+		<a href="{php echo $this->createWebUrl('product',array('sid'=>$sid))}">商品列表</a>
+	</li>
+	
+	<li {if $thistype==1||$thistype==2}class="active"{/if}>
+		{if $thistype==2}
+			<a class="disabled">
+				更新商品
+			</a>
+		{else}
+			<a href="{php echo $this->createWebUrl('product',array('gid'=>-1,'sid'=>$sid))}">
+				添加商品
+			</a>
+		{/if}
+	</li>
+</ul>
+{if $thistype==1||$thistype==2}
+<style>
+</style>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form class="form-horizontal" method="post">
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">商品名称</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="name" value="{$onec['name']}"  placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">对应店铺</label>
+		    <div class="col-sm-10">
+		    	<select class="form-control" name="shops">
+				{loop $shops $i $v}
+						<option {if $onec['shopid'] == $v['id'] }selected{/if} value="{$v['id']}" >{$v['name']}</option>
+				{/loop}
+			    </select>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">商品类别</label>
+		    <div class="col-sm-10">
+		    	<select class="form-control" name="category">
+				{loop $activityarr $i $v}
+						<option {if $onec['category']==$i }selected{/if} value="{$i}" >{$v}</option>
+				{/loop}
+			    </select>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">商品图片</label>
+		    <div class="col-sm-10">
+		    	{php echo tpl_form_field_image('banner',$onec['banner']);}
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">商品详情</label>
+		    <div class="col-sm-10">
+		    	{php echo tpl_ueditor("details",$onec['details'])}
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		    	<input type="hidden" name="token" value="{$_W['token']}" >
+		    	<input type="hidden" name="shopid" value="{$sid}" >
+		      <button type="submit" class="btn btn-default">确定</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
+</div>
+{else}
+<div class="panel panel-default">
+	<div class="panel-body">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>商品名称</th>
+					<th>商品图片</th>
+					<th>抢购价</th>
+					<th>活动时间</th>
+					
+					<th>库存</th>
+					<th>已售人数</th>
+					<th>参与人数</th>
+					<th>活动二维码</th>
+					<th>活动链接</th>
+					<th>操作</th>
+<!-- 					商品名称、活动时间、库存（数）、已售（数）、参与（人数）、订单、参与记录、二维码、链接 -->
+				</tr>
+			</thead>
+			<tbody>
+				{loop $goods $i $v}
+					<tr>
+						<td>{$v['name']}</td>
+						<td><img src="{php echo tomedia($v['banner']) }" style="width: 4em" alt=""></td>
+						<td>{$v['true_price']}</td>
+						<td>
+							{if $v['start_time'] == 0}
+								<span class="badge" style="background: #e67e22">请先设置活动</span>
+							{else}
+								<span class="badge" style="background: #27ae60">
+									{php echo date("Y.m.d",$v['$start_time'])."至".date("Y.m.d",$v['end_time'])}
+								</span>
+							{/if}
+						</td>
+						<td>{if !empty($v['aid'])} {$v['stock']} {/if}</td>
+						<td>{if !empty($v['aid'])} {$v['buy_count']} {/if}</td>
+						<td>{if !empty($v['aid'])} {$v['join_count']} {/if}</td>
+						<td>
+								{if !empty($v['aid'])}  			
+									<img style="width: 70px;height: 70px;" src="{php echo $this->images($v['aid'])}" alt="">
+								{/if}
+						</td>
+						<td>
+							{if !empty($v['aid'])}  
+								<input style="color: black" type="text" value="{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=art&m=ly_fenxiaohuodong&artid={$v['aid']}">
+							{/if}
+						</td>
+						<td>
+							<div class="btn-group">
+								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">操作
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="{php echo $this->createWebUrl('activity',array('gid'=>$v['gid']));}">编辑活动</a>
+									</li>
+									<li class="">
+										<a href="{php echo $this->createWebUrl('orders',array('arid'=>$v['aid']));}">参与用户</a>
+									</li>
+									<li>
+										<a href="{php echo $this->createWebUrl('product',array('gid'=>$v['gid'],'sid'=>$sid,'bainji'=>1));}">编辑商品</a>
+									</li>
+									<li>
+										<a href="{php echo $this->createWebUrl('edit_menu',array('aid'=>$v['aid']));}">编辑底部菜单</a>
+									</li>
+									<li>
+										{if !empty($v['aid'])}
+											<a href="{php echo $this->images($v['aid'])}">活动二维码</a>
+										{/if}
+									</li>
+									<li>
+										<a href="{php echo $this->createWebUrl('robot_order',array('aid'=>$v['aid']))}">机器人管理</a>
+									</li>
+								</ul>
+							</div>
+							<button type="button" onclick="deleate({$v['gid']})" class="btn btn-danger">删除</a>
+						</td>
+					</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	function deleate(id){
+		if(confirm("是否确认删除?")){
+			window.location.href="{php echo $this->createWebUrl('product',array('shanchu'=>1,'sid'=>$sid));}&gid="+id
+		}
+	}
+</script>
+{/if}
+{template 'common/footer'}

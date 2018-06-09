@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>活动</title>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="apple-mobile-web-app-capable" content="no" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" type="text/css" href="../addons/ly_fenxiaohuodong/template/mobile/swiper/swiper.min.css" />
+	<script src="../addons/ly_fenxiaohuodong/template/mobile/swiper/swiper.min.js"></script>
+	<script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<style>
+	a{
+		text-decoration:none;
+		color: #fff;
+	}
+	.swiper-container {
+		width: 100%;
+	}  	
+	.swiper-img{
+		width: 100%;
+	}
+	.headers{
+		background: #ccf ;
+		color: #000;
+		padding: 0.5em 1em;
+		text-align: center;
+	}
+	.fixedbuttons{
+		position: fixed;
+		top: 5em;
+		right:1px;
+		z-index: 999;
+		width: 2.2em;
+	}
+	.fixedbuttons img{
+		width: 2.5em;
+		height: 2.5em;
+		margin-bottom: 0.5em;
+		border-radius: 2em;
+		border: 1px solid #ffc800;
+		opacity:0.8;
+		box-shadow: 1px 1px 1px #646b73;
+	}
+	.shop-t{
+		background: #ccf;
+		padding: 2px 1em;
+		border-bottom: 1px solid #ccc;
+		color: #e75d48;
+		text-shadow: none;
+	}
+	.heibai{
+		-webkit-filter: grayscale(100%);
+	}
+</style>
+</head>
+<body>
+
+	<div data-role="page" id="index">
+		<div class="headers">
+			陈别闹，诚邀您参加
+			<span style="color: #2958a2;font-weight: bold;text-shadow: none">{$goods['name']}</span>活动
+		</div>
+		<div data-role="content" style="padding: 0">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<img src="../addons/ly_fenxiaohuodong/template/mobile/img/bannerb1.jpg" class="swiper-img"  alt="">
+					</div>
+					<div class="swiper-slide">
+						<img src="../addons/ly_fenxiaohuodong/template/mobile/img/banner/b2.jpg" class="swiper-img"  alt="">
+					</div>
+					<div class="swiper-slide">
+						<img src="../addons/ly_fenxiaohuodong/template/mobile/img/banner/b3.jpg" class="swiper-img"  alt="">
+					</div>
+				</div>
+				<div class="swiper-pagination"></div>
+			</div> 
+
+			<div class="jianshu">
+				<div style="box-shadow:0px 0px 8px rgb(180,180,180);margin:5px;padding:1em 5px;margin-top:1em;margin-bottom: 3em;">
+					<div class="shop-t" style="padding: 0;font-weight: bold;padding-bottom: 1em;background: none">
+						{$goods['title']}
+					</div>
+					<div class="ui-grid-a">
+						<div class="ui-block-a" style="padding-top: 0.5em;color: #95a5a6">
+							<span style="font-size: 14px;">
+								截至时间:
+								<br>
+								{php echo date('Y-m-d H:m:s',$goods['end_time'])}
+							</span>
+						</div>
+						<div class="ui-block-b">
+							<a href="#pagetwo" class="ui-btn ui-corner-all ui-shadow " style="background: #3498db;text-shadow: none">
+								<span style="color: #ffc800">{$goods['price']}元</span>
+								<span style="color: #fff">抢购</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="jiesaho">
+				<div class="shop-t">
+					活动介绍：
+				</div>
+				<div>
+
+				</div>
+			</div>
+			<div class="xuzhi">
+				<div class="shop-t">
+					活动须知：
+				</div>
+				<div>
+					<img src="../addons/ly_fenxiaohuodong/template/mobile/img/44.jpg" style="width: 100%" alt="">
+				</div>
+			</div>
+			<div class="shuoming">
+				<div class="shop-t">
+					活动说明：
+				</div>
+
+			</div>
+			<div class="dic-p-list">
+				<div class="shop-t">
+					购买记录：
+				</div>
+				<div>
+					<ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+						<li class="ui-li-has-alt ui-li-has-thumb ui-last-child">
+							<a href="#" class="ui-btn" style="margin: 0;">
+								<img src="../addons/ly_fenxiaohuodong/template/mobile/img/banner/b1.jpg" style="padding: 1em;width: 3em;height: 3em;border-radius: 3em;">
+								<h2>微信昵称</h2>
+								<p>
+									<span>178****8888</span>
+									<span style="float: right;">2017-12-22 16:30</span>
+									<span style="color: both"></span>
+								</p>
+							</a>
+
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="fixedbuttons">
+				<!-- 右侧菜单 -->
+				<a href="tel:17865685009">
+					<img src="../addons/ly_fenxiaohuodong/template/mobile/img/bohao.png" alt="">
+				</a>
+				<a href="#kefu"  data-transition="pop">
+					<img src="../addons/ly_fenxiaohuodong/template/mobile/img/kefu.png" alt="">
+				</a>
+				<a href="#liucheng" data-transition="pop">
+					<img src="../addons/ly_fenxiaohuodong/template/mobile/img/liucheng.png" alt="">
+				</a>
+			</div>
+			<div id="shangjiahead" style="position: fixed;z-index: 999;top: 15vw;width: 100%;background: rgba(50,50,50,0.7);color: #fff;/*opacity: 0.8;*/padding: 0.5em 1em;text-shadow: none;text-align: center;height: 6vw;">
+                <img id="quxiaofabu" style="width: 6vw;height: 6vw;position: absolute;left: 5vw;top: 2vw;" src="../addons/ly_fenxiaohuodong/template/mobile/img/quxiao.png">
+				<p style="position: absolute;left: 15vw;top: -2vw;font-weight: 300;">我是商家，我也要发布活动</p>
+				<a href="#shanghuzhuce"  data-transition="pop" style="color: white;position: absolute;right: 15vw;width: 15vw;height: 6vw;background-color: #00aab8;border-radius: 1vw;line-height: 6vw;">
+				报名
+				</a>
+			</div>
+	</div>
+	<div data-role="footer" data-position="fixed" style="text-align: center;">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#"  data-transition="pop">
+					<img src="../addons/ly_fenxiaohuodong/template/mobile/img/index.png" style="width: 3em;height: 3em;" alt="">
+					<div>首页</div>
+				</a></li>
+				<li><a href="#">
+					<img src="../addons/ly_fenxiaohuodong/template/mobile/img/dingdan.png" style="width: 3em;height: 3em" alt="">
+					<div>订单</div>
+				</a></li>
+				<li><a href="#">
+					<img src="../addons/ly_fenxiaohuodong/template/mobile/img/jiangli.png" style="width: 3em;height: 3em" alt="">
+					<div>奖金</div>
+				</a></li>
+				<li >
+					<a href="#pagetwo" style="background: #f1c40f">
+						<img src="../addons/ly_fenxiaohuodong/template/mobile/img/goumai.png" style="width: 3em;height: 3em" alt="">
+						<div>抢购</div>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" data-dialog="true" id="kefu">
+		<div data-role="header">
+			<h1>客服二维码</h1>
+		</div>
+		<div data-role="content">
+			<img src="img/qrcode.png" style="width: 100%;" alt="">
+		</div>
+	</div>
+	<div data-role="page" data-dialog="true" id="liucheng">
+		<div data-role="header">
+			<h1>活动流程</h1>
+		</div>
+		<div data-role="content">
+			<div id="shouhou" style="line-height: 20px; font-size: 12px;">
+							<strong>1、生鲜“优鲜赔”绿色通道</strong><br>
+							<p>生鲜自营商品的破损或腐坏等问题，请在商品签收后48小时内提交“<strong>优鲜赔</strong>”申请，100分钟内审核通过后即享补偿，无需返回商品；非鲜活易腐类商品需上门取件。<br></p>
+							<strong>2、专业生鲜客服团队—让您售后无忧</strong><br>
+							<p>微信在线客服：JD-fresh<br>京东生鲜客服电话：400-606-3311<br>服务时间：09:00-24:00 <br></p>
+
+							<strong><a href="//help.jd.com/user/issue/325-931.html" target="_blank"><font color="red">生鲜商品售后政策</font></a></strong><br>
+							<p>注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，京东生鲜不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若京东生鲜没有及时更新，请大家谅解！</p>
+						</div>
+						<div id="state">
+							<strong>权利声明：</strong><br>京东上的所有商品信息、客户评价、商品咨询、网友讨论等内容，是京东重要的经营资源，未经许可，禁止非法转载使用。
+							<p><b>注：</b>本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。</p>
+							<br>
+						</div>
+		</div>
+	</div>
+	<div data-role="page" id="pagetwo">
+		<div data-role="content">
+			<div style="font-size: 20px;">
+				活动须知：
+				<hr>
+				领取时间：而且，实际项目中的设计师设计东东的时候不可能是总是跟着jQuery Mobile的UI来的。因此，我们难免会碰到对其模板进行修改或是新添加的情况。
+				不过，我可以确信的是，如果在个人网站或是其他一些非对外的中小项目上使用jQuery Mobile的话，一定会爽歪的！
+				然后，还有一点我得承认。jQuery Mobile的上手可比Sencha Touch快多了。其UI显示基本上就是基于HTML5的data-自定义属性来的，跟它的老爸爸jQuery一样，确实是write less, do more.
+				页面元素的UI显示完全可以根据HTML代码内容和属性而来，不需要任何额外的JavaScript代码或是CSS代码，有模有样的手机页面效果就可以出炉。而且，要出效果页面，你只要静下心花个1整天的时间把官方的介绍文档看一篇就可以了。真这么简单。
+				例如下面这个纯显示的页面们（PC建议使用Chrome浏览器围观）。
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed" style="text-align: center;background: #8e44ad;">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#shanghuzhuce"  data-transition="pop">
+						<img src="../addons/ly_fenxiaohuodong/template/mobile/img/index.png" style="width: 3em;height: 3em;" alt="">
+						<div>首页</div>
+					</a></li>
+					<li><a href="#">
+						<img src="../addons/ly_fenxiaohuodong/template/mobile/img/dingdan.png" style="width: 3em;height: 3em" alt="">
+						<div>订单</div>
+					</a></li>
+					<li><a href="#">
+						<img src="../addons/ly_fenxiaohuodong/template/mobile/img/jiangli.png" style="width: 3em;height: 3em" alt="">
+						<div>奖金</div>
+					</a></li>
+					<li >
+						<span id="pay">
+							<img src="../addons/ly_fenxiaohuodong/template/mobile/img/goumai.png" style="width: 3em;height: 3em" alt="">
+							<div>抢购1</div>
+						</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="shanghuzhuce">
+			<div data-role="header">
+				<a href="#index" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">返回</a>
+				<h1>活动申请</h1>
+			</div>
+			<div data-role="content">
+
+				<div style="font-size: 14px;margin-bottom: 2em;">
+					请您填写相关信息，让我们为您定制营销活动。
+				</div>
+				<form method="post" action="">
+					<div class="ui-field-contain">
+						<div>
+							<label >请输入店铺名称：</label>
+							<input type="text" name="" >  
+						</div>
+						<div>
+							<label >请输入店铺电话：</label>
+							<input type="text" name="" >  
+						</div>
+						<div>
+							<label >请输入店铺地址：</label>
+							<input type="text" name="" >  
+						</div>
+						<div>
+							<label >请输入业务联系人：</label>
+							<input type="text" name="" >  
+						</div>
+						<div><label >简单介绍想发起的活动：</label>
+							<textarea name="" id="" cols="50" rows="10"></textarea>
+						</div>
+					</div>
+					<input type="submit" class="ui-content" value="提交">
+				</form>
+
+			</div>
+		</div>	
+		<script>
+			$(function(){
+				var mySwiper = new Swiper ('.swiper-container', {
+					loop: true,
+					pagination: {
+						el: '.swiper-pagination',
+					},
+					effect : 'fade',
+					autoplay:true
+				})
+				$('#pay').click(function(){
+					window.location.href = "{php echo $this->createMobileUrl('payment',array('price'=>$savearr['price'],'act_id'=>$savearr['activityid']))}"
+				}) 	
+				$("#quxiaofabu").click(function(){
+					$("#shangjiahead").hide();
+				});
+			})
+		$(document).on("pagebeforeshow","#pagetwo",function(){ //当进入页面二时 
+			document.title="改变标题";
+		});
+	</script>
+</body>
+</html>

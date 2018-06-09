@@ -1,0 +1,44 @@
+{template 'common/header'}
+<link rel="stylesheet" href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css">
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="#">基本设置</a>
+    </li>
+</ul>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <span>功能设置</span>
+    </div>
+    <div class="panel-body">
+        <form class="layui-form" action="" method="POST">
+            <div class="layui-form-item" style="margin: 2em">
+                <div class="layui-row">
+                    <div class="layui-col-md2"><span>是否开启自动返利：</span></div>
+                    <div class="layui-col-md1" style="margin-top: -0.5em"><input type="checkbox" name="close" {if $set_info['auto'] == 1}checked{/if} lay-filter="switchTest" lay-skin="switch" style="width: 100px;height: 100px" lay-text="开启|关闭"></div>
+                     <div class="layui-col-md3"style="margin-top: -0.3em">
+                        <input type="hidden" name="token" value="{$_W['token']}">
+                        <input name="submit" type="submit" class="btn btn-success" value="确定">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="../addons/ly_fenxiaohuodong/template/mobile/layui/layui.js"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form
+        ,layer = layui.layer,
+        $ = layui.jquery;
+        form.on('switch(switchTest)', function(data){
+            var status = this.checked ? 'true' : 'false';
+            if(status == 'true')
+                layer.tips('温馨提示：你开启了自动返利功能', data.othis)
+            else
+                layer.tips('温馨提示：你关闭了自动返利功能', data.othis)
+        });
+    })
+  
+</script>
+{template 'common/footer'}

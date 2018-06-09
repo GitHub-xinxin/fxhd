@@ -1,0 +1,108 @@
+{template 'common/header'}
+<style>
+	table tr:hover{
+		background: #3498db;
+		color: #fff;
+		-webkit-transition: all 0.2s;
+	}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $thistype==0}class="active"{/if}>
+		<a href="{php echo $this->createWebUrl('shops')}">信息列表</a>
+	</li>
+	
+<!-- 	<li {if $thistype==1||$thistype==2}class="active"{/if}>
+		{if $thistype==2}
+			<a class="disabled">
+				更新店铺
+			</a>
+		{else}
+			<a href="{php echo $this->createWebUrl('shops',array('sid'=>-1))}">
+				添加商铺
+			</a>
+		{/if}
+	</li> -->
+</ul>
+{if $thistype==1||$thistype==2}
+<style>
+</style>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form class="form-horizontal" method="post">
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label">店铺名称</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="name" value="{$oneshop['name']}"  placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="lastname" class="col-sm-2 control-label">店铺地址</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="address" value="{$oneshop['address']}" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="lastname" class="col-sm-2 control-label">管理者名称</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="username" value="{$oneshop['username']}" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="lastname" class="col-sm-2 control-label">管理者电话</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="phone" value="{$oneshop['phone']}" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="lastname" class="col-sm-2 control-label">店铺简介</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="introduce" value="{$oneshop['introduce']}" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		    	<input type="hidden" name="token" value="{$_W['token']}" >
+		      <button type="submit" class="btn btn-default">确定</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
+</div>
+{else}
+<div class="panel panel-default">
+	<div class="panel-body">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>店铺名称</th>
+					<th>店铺地址</th>
+					<th>店铺管理员</th>
+					<th>管理员手机</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $infos $i $v}
+					<tr>
+						<td>{$v['name']}</td>
+						<td>{$v['address']}</td>
+						<td>{$v['username']}</td>
+						<td>{$v['phone']}</td>
+						<td>
+							<button type="button" onclick="deleate({$v['id']})" class="btn btn-danger">删除</a>
+						</td>
+					</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	function deleate(id){
+		if(confirm("是否确认删除?")){
+			window.location.href="{php echo $this->createWebUrl('info',array('shanchu'=>1));}&sid="+id
+		}
+	}
+</script>
+{/if}
+{template 'common/footer'}

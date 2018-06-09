@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>订单管理</title>
+        <link rel="stylesheet" href="../addons/ly_fenxiaohuodong/template/mobile/css/jquery.mobile-1.4.5.min.css">
+        <link href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css" rel="stylesheet" />
+        <script src="../addons/ly_fenxiaohuodong/template/mobile/layui/layui.js"></script>
+
+        <style>
+            .bonus{
+                background-color: #009688;
+                width: 100%;
+                height: 9.5em;
+                margin: 0 0;
+                color: white
+            }
+            .tx{
+                text-align: right;
+                padding-right: 0.9em;
+                margin-top :0.4em;
+            }
+            .layui-tab-content{
+                padding-left: 0;
+                padding-right: 0;
+            }
+			.layui-table td{
+				font-size: 0.7em;
+				text-align: center
+			}
+			.layui-table th{
+				text-align: center
+			}
+
+        </style>
+    </head>
+    <body>  
+        <div id="rebate" style="display: none;padding:0 0.3em">
+            <table class="layui-table">
+                <colgroup>
+                    <col width = '30%'>
+                    <col width = '40%'>
+                    <col width = '30%'>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>昵称</th>
+                        <th>返利时间</th>
+                        <th>返利金额</th>
+                    </tr> 
+                </thead>
+                <tbody id="rebate_detail">
+                
+                </tbody>
+            </table>
+        </div>
+        <div class="bonus">
+            <p style="margin-left:0.9em;padding-top: 0.5em">总成交金额:</p>
+            <div>
+                <div style="text-align: center;font-size: 1.7em;"><span id="fee"></span>&nbsp;元</div> 
+            </div>
+            <p style="margin-left:0.9em;padding-top: 0.5em">总成交单数:</p>
+            <div style="text-align: center;font-size: 1.7em;padding-top: 0.25em"><span id="order"></span>&nbsp;单</div> 
+        </div>
+        <table class="layui-hide" id="test" lay-filter="demo"></table>  
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" style="margin:0" lay-event="detail">返利</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">发&nbsp;&nbsp;&nbsp;&nbsp;货</a>
+        </script>
+        <script>
+            layui.use('table', function(){
+			var table = layui.table,$ = layui.jquery;
+			table.render({
+				elem: '#test'
+				,url:"{php echo $this->createMobileUrl('order_mag',array('actid'=>$_GPC['actid']))}"
+				,page: 'true'
+				,loading:'true'
+                ,limit:20
+				,initSort: {
+					field: 'id' //排序字段，对应 cols 设定的各字段名
+					,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+				}
+				,cols: [[
+					{field:'id', width:'15%', title: 'ID'}
+					,{field:'name', width:'23%', title: '姓名'}
+                    ,{field:'phone', width:'27%', title: '手机'}
+					,{field:'integral', title: '操作', width: '35%', toolbar: '#barDemo'}
+				]]
+				,text: {
+					none: '<hr><div style="text-align:center;font-size:0.8em"><span>暂无相关数据</span></div>' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+				}
+                , done: function(res, curr, count){
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    $('#order').text(count)
+                    $('#fee').text(res.msg)
+                   
+                    $('tbody').children().each(function(index,elem){
+                        if(res.data[index].is_take == 1){
+                            $(this).find('a').eq(1).text('已发货').css('background-color','#FF5722')
+                        }
+                    })
+                }
+			});
+            //监听工具条
+            table.on('tool(demo)', function(obj){
+                console.log(obj.tr.selector)
+                var data = obj.data;
+                if(obj.event === 'detail'){      
+                    $.post("{php echo $this->createMobileUrl('order_mag')}",{op:'rebate',orderid:data.id,actid:data.activityid},function(res){
+                        $('#rebate_detail').empty()
+                        if(res.one_level != ''){
+                            var one = $('<tr><td>'+res.one_level.nickname+'</td><td>'+res.one_level.time+'</td><td>'+res.one_level.fee+'</td></tr>');
+                            $('#rebate_detail').append(one)
+                        }
+                        if(res.two_level != ''){
+                            var two = $('<tr><td>'+res.two_level.nickname+'</td><td>'+res.two_level.time+'</td><td>'+res.two_level.fee+'</td></tr>');
+                                $('#rebate_detail').append(two)
+                        }
+                        if(res.three_level != ''){
+                            var three = $('<tr><td>'+res.three_level.nickname+'</td><td>'+res.three_level.time+'</td><td>'+res.three_level.fee+'</td></tr>');
+                            $('#rebate_detail').append(three)
+                        }           
+                        layer.open({
+                            type: 1,
+                            title:'返利明细',
+                            content: $('#rebate')
+                        });
+                    },'json')
+                }else if(obj.event === 'edit'){
+                    if(data.is_take == 0){
+                          layer.confirm('确定已发货？', {icon: 3, title:'提示'}, function(index){
+                            $.post("{php echo $this->createMobileUrl('order_mag')}",{op:'take',orderid:data.id},function(res){
+                                $(obj.tr.selector).find('a').eq(1).text('已发货').css('background-color','#FF5722')
+                            },'json')
+                            
+                            layer.close(index);
+                        });
+                    }
+                  
+                }
+            });   
+		});
+        </script>
+{template 'footer'}

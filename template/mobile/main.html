@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>首页</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link rel="stylesheet" type="text/css" href="../addons/ly_fenxiaohuodong/template/mobile/swiper/swiper.min.css" />
+  <script src="../addons/ly_fenxiaohuodong/template/mobile/js/jquery.min.js"></script>
+	<script src="../addons/ly_fenxiaohuodong/template/mobile/swiper/swiper.min.js"></script>
+  <script src="../addons/ly_fenxiaohuodong/template/mobile/layui/layui.js"></script>
+  <link href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css" rel="stylesheet" />
+  <style>
+    .card-content-inner {
+      padding: 0.1rem .75rem;
+      position: relative;
+    }
+    p {
+        margin: 0.5em 0;
+    }
+    .detail{
+      padding-top: 1.6em;
+      padding-left: .5em;
+      height: 5em;
+      overflow: hidden;
+    }
+    .img{
+      width:5em;height: 5em;float: left
+    }
+    .title{
+      color: white;
+      background-color: #009688;
+    }
+  	.swiper-container {
+      width: 100%;
+    }  	
+    .swiper-img{
+      width: 100%;
+      /* height: 14em; */
+    }
+    .img_inco{
+      width: 3em;
+      height: 3em;
+      border-radius: 50%
+    }
+    .layui-tab-content{
+      padding: 0;
+    }
+    .layui-tab-brief{
+      margin: 0;
+    }
+    .card{
+      background-color: white;
+      margin: 0.4em 0;
+    }
+    .card_img{
+      width: 100%;
+      height: 10em;
+    }
+    .layui-tab-title{
+      background-color: #fff
+    }
+    html{
+      height: 100%
+    }
+    body{
+      background-color: #e2e2e2
+    }
+    .card_detail{
+      height: 3em;
+      overflow: hidden;
+      font-size: 1.1em;
+      text-indent: 1em;
+      line-height: 1.7em;
+      letter-spacing: 0.03em;
+      padding-left: 0.5em;
+    }
+    .card_people_img{
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+    }
+    .layui-col-xs3{
+      margin-bottom: 0.5em
+    }
+    .kind{
+      color: #5FB878
+    }
+    .class_img{
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="shangjiahead" style="position: fixed;z-index: 999;top: 0;width: 100%;background: rgba(50,50,50,0.7);color: #fff;/*opacity: 0.8;*/padding: 0.5em 1em;text-shadow: none;text-align: center;height: 6vw;">
+    <img id="quxiaofabu" style="width: 6vw;height: 6vw;position: absolute;left: 5vw;top: 2vw;" src="../addons/ly_fenxiaohuodong/template/mobile/img/quxiao.png">
+    <p style="position: absolute;left: 15vw;top: 0vw;font-weight: 300;">我是商家，我也要发布活动</p>
+    <a href="{php echo $this->createMobileUrl('act_register')}"  data-transition="pop" style="color: white;position: absolute;right: 10vw;width: 15vw;height: 6vw;background-color: #00aab8;border-radius: 1vw;line-height: 6vw;">
+      报名
+    </a>
+  </div>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <a href="{$goods['url1']}"><img src="../addons/ly_fenxiaohuodong/template/mobile/img/banner/ddd.jpg" class="swiper-img"  alt=""></a>
+      </div>
+      <div class="swiper-slide">
+        <a href="{$goods['url2']}"><img src="../addons/ly_fenxiaohuodong/template/mobile/img/banner/www.jpg" class="swiper-img"  alt=""></a>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div> 
+  <div style="background-color: #fff;">
+    <div class="layui-row" style="padding: 1.1em 0;text-align: center">
+      <div class="layui-col-xs3">
+        <a {if $_GPC['kind'] == -1 || empty($_GPC['kind'])} class="kind" {/if} href="{php echo $this->createMobileUrl('main',array('kind'=>-1,'artid'=>$_GPC['artid']))}">全部</a> 
+      </div>
+      {loop $kind_list $row}
+        <div class="layui-col-xs3">
+          
+          <a {if $_GPC['kind'] == $row['id']} class="kind" {/if} href="{php echo $this->createMobileUrl('main',array('kind'=>$row['id'],'artid'=>$_GPC['artid']))}"><img class="class_img" src="{php echo tomedia($row['pic'])}" alt="">&nbsp{$row['name']}</a> 
+        </div>
+      {/loop}
+    </div>
+  </div>
+  <div class="layui-tab layui-tab-brief"  lay-filter="test1">
+      <ul class="layui-tab-title">
+        <li style="width: 25%" class="layui-this">正在进行</li>
+        <li style="width: 25%">即将开始</li>
+        <li style="width: 25%">全部活动</li>
+      </ul>
+      <div class="layui-tab-content" style="padding-bottom: 4.5em">
+        <div class="layui-tab-item layui-show" id="i1">
+          {if !empty($act_list)}
+            {loop $act_list $index $row}
+              {if $row['start_time'] < time()}
+                <div class="card">
+                
+                    <img class="card_img" alt="" src="{php echo tomedia($row['banner'])}">
+                    <p class="card_detail">
+                      <span style="font-family: '微软雅黑'">
+                          {$row['sketch']}
+                      </span>
+                    </p>
+                  <div style="padding-left: 0.6em" class="layui-row">
+                    <div class="layui-col-xs6" style="height:1.5em;overflow: hidden;">
+                      {loop $row['head_img'] $key}  
+                      <img class="card_people_img" src="{$key}" alt=""> 
+                      {/loop}
+                    </div>
+                    <div class="layui-col-xs6">
+                      <span style="color: #c2c2c2;position: relative;top: 0.3em;padding-left: 1em">{$row['join_count']}人正在参与</span>
+                    </div>
+                  </div>
+                  <div style="padding: 1em 0;" class="layui-row">
+                    <div class="layui-col-xs8">
+                        <span style="color: red;font-size: 0.9em;padding: 0 1em;">抢购价<span style="font-size: 1.4em">￥{$row['true_price']}</span>  </span><span style="color: #c2c2c2;font-size: 0.8em">原价 ￥{$row['orig_price']}</span>
+                    </div>  
+                    <div class="layui-col-xs4">
+                        <a href="{php echo $this->createMobileUrl('art',array('artid'=>$row['aid']))}" class="layui-btn layui-btn-sm layui-btn-danger" style="border-radius: 3em;box-shadow: 1px 1px 1px #FF5722;"><span style="padding:0 1em;">立即抢购</span></a>
+                    </div>
+                  </div>
+                </div>    
+                {/if}            
+            {/loop}  
+          {/if}
+          <div style="text-align: center;margin-top: 1em" id="i1_no"><span> 暂无活动</span></div> 
+        </div>
+        <div class="layui-tab-item" id="i2">
+          {if !empty($act_list)}
+              {loop $act_list $row}
+                {if $row['start_time'] > time()}
+                  <div class="card">
+                      <img class="card_img" alt="" src="{php echo tomedia($row['banner'])}">
+                      <p class="card_detail">
+                        <span style="font-family: '微软雅黑'">
+                            【2016.1.12截】高性价比团长再接再砺！白菜价专柜品的日韩原单美衣！性价比超级高，图渣貌美库存少，只要有号赶紧抢！能不能撑到团购结束真不知道……反馈已出
+                        </span>
+                      </p>
+                    <div style="padding-left: 0.6em" class="layui-row">
+                      <div class="layui-col-xs6" style="height:1.5em;overflow: hidden;">
+                      {loop $row['head_img'] $key}  
+                        <img class="card_people_img" src="{$key}" alt=""> 
+                      {/loop}
+                      
+                      </div>
+                      <div class="layui-col-xs6">
+                        <span style="color: #c2c2c2;position: relative;top: 0.3em;padding-left: 1em">{$row['join_count']}人正在参与</span>
+                      </div>
+                    </div>
+                    <div style="padding: 1em 0;" class="layui-row">
+                      <div class="layui-col-xs8">
+                          <span style="color: red;font-size: 0.9em;padding: 0 1em;">抢购价 <span style="font-size: 1.4em">￥{$row['true_price']}</span>  </span><span style="color: #c2c2c2;font-size: 0.8em">原价 ￥{$row['orig_price']}</span>
+                      </div>  
+                      <div class="layui-col-xs4">
+                          <a href="{php echo $this->createMobileUrl('art',array('artid'=>$row['aid']))}" class="layui-btn layui-btn-sm layui-btn-danger" style="border-radius: 3em;box-shadow: 1px 1px 1px #FF5722;"><span style="padding:0 1em;">立即抢购</span></a>
+                      </div>
+                    </div>
+                  </div>     
+                {/if}       
+            {/loop}     
+          {/if}
+          <div style="text-align: center;margin-top: 1em" id="i2_no"><span> 暂无活动</span></div> 
+        </div>
+        <div class="layui-tab-item" id="i3">
+          {if !empty($act_list)}
+            {loop $act_list $row}
+                <div class="card">
+                    <img class="card_img" alt="" src="{php echo tomedia($row['banner'])}">
+                    <p class="card_detail">
+                      <span style="font-family: '微软雅黑'">
+                          【2016.1.12截】高性价比团长再接再砺！白菜价专柜品的日韩原单美衣！性价比超级高，图渣貌美库存少，只要有号赶紧抢！能不能撑到团购结束真不知道……反馈已出
+                      </span>
+                    </p>
+                  <div style="padding-left: 0.6em" class="layui-row">
+                    <div class="layui-col-xs6" style="height:1.5em;overflow: hidden;">
+                        {loop $row['head_img'] $key}  
+                  
+                        <img class="card_people_img" src="{$key}" alt=""> 
+                      {/loop}
+                    </div>
+                    <div class="layui-col-xs6">
+                      <span style="color: #c2c2c2;position: relative;top: 0.3em;padding-left: 1em">{$row['join_count']}人正在参与</span>
+                    </div>
+                  </div>
+                  <div style="padding: 1em 0;" class="layui-row">
+                    <div class="layui-col-xs8">
+                        <span style="color: red;font-size: 0.9em;padding: 0 1em;">抢购价 <span style="font-size: 1.4em">￥{$row['true_price']}</span>  </span><span style="color: #c2c2c2;font-size: 0.8em">原价 ￥{$row['orig_price']}</span>
+                    </div>  
+                    <div class="layui-col-xs4">
+                        <a href="{php echo $this->createMobileUrl('art',array('artid'=>$row['aid']))}" class="layui-btn layui-btn-sm layui-btn-danger" style="border-radius: 3em;box-shadow: 1px 1px 1px #FF5722;"><span style="padding:0 1em;">立即抢购</span></a>
+                    </div>
+                  </div>
+                </div>     
+            {/loop} 
+        {/if}
+        <div style="text-align: center;margin-top: 1em" id="i3_no"><span> 暂无活动</span></div> 
+        </div>
+      </div>
+    </div> 
+<script>
+  layui.use(['element', 'layer'], function(){
+    var element = layui.element,
+    layer = layui.layer,
+    $ = layui.jquery;
+    
+    $(function(){
+      $('#i1_no').hide()
+      $('#i2_no').hide()
+      $('#i3_no').hide()
+
+      if($('#i1').children().length <= 1){
+        if($('#i1').children().length <= 1){
+          $('#i1_no').show()
+        }else{
+          $('#i1_no').hide()
+        }
+      }
+    })
+    element.on('tab(test1)', function(res){
+      if(res.index == 0){
+        if($('#i1').children().length <= 1){
+          $('#i1_no').show()
+        }else{
+          $('#i1_no').hide()
+        }
+      }else if(res.index == 1){      
+        if($('#i2').children().length <= 1){
+          $('#i2_no').show()
+        }else{
+          $('#i2_no').hide()
+        }
+      }else if(res.index == 2){
+        if($('#i3').children().length <= 1){
+          $('#i3_no').show()
+        }else{
+          $('#i3_no').hide()
+        }
+      }
+    });
+
+  });
+  $(function(){
+    $("#quxiaofabu").click(function(){
+      $("#shangjiahead").hide();
+    });
+   
+    var mySwiper = new Swiper ('.swiper-container', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      effect : 'fade',
+      autoplay:true
+    }) 	
+  })
+</script>
+{template 'footer'}

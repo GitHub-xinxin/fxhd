@@ -1,0 +1,7 @@
+{template 'common/header'}
+<form action="" method="post" class="form form-horizontal">{template 'rpApi'}
+    <button class="btn btn-primary" type="submit" name="submit" value="提交">提交</button>
+    <input type="hidden" name="token" value="{$_W['token']}">
+</form>
+
+{template 'common/footer'}

@@ -1,0 +1,129 @@
+{template 'common/header'}
+<style>
+	th,td{
+		text-align: center;
+	}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('task',array('op'=>'working'))}">派发中</a></li>
+	<li><a href="{php echo $this->createWebUrl('task',array('op'=>'warting'))}">待处理</a></li>
+	<li><a href="{php echo $this->createWebUrl('task',array('op'=>'complete'))}">已完成</a></li>
+    <li><a href="{php echo $this->createWebUrl('task',array('op'=>'over'))}">已结单</a></li>
+    <li class="active"><a href="">报名人员</a></li>
+</ul>
+<div class="panel panel-info">
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="" method="post" class="form-horizontal" name="form">
+			<div class="form-group"> 
+				<div class="row">
+					<div class="col-xs-9">
+						<label class="col-xs-2 control-label">搜索任务</label>
+						<div class="col-xs-10"> 
+							<input type="text" name="keyword" class='form-control' placeholder='可根据学生姓名、电话进行模糊搜索' value="{$keyword}" /> 
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label"></label>
+						<div>
+							<button type="button" class="btn btn-default">总记录数：{$total}</button> 
+							<input type="hidden" name="token" value="{$_W['token']}">
+							<input type="submit" name="submit" name="form" value="搜索" class="btn btn-default"><i class="fa fa-search"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form> 
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span>学生报名列表</span>
+		{if $_GPC['op']=="warting"}
+        	<span style="padding-left:53em;"><button class="btn btn-success" id="send" data-toggle="tooltip"  title="选取{$task['count']}位学生,{if $task['is_limit']==0}不限制男女{else}{$task['boy']}男{$task['girl']}女{/if}后,提交">提交</button></span>
+		{/if}
+		</div>
+	<div class="panel-body table-responsive">
+		<table class="table table-hover table-striped table-condensed">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>电话</th>
+					<th>性别</th>
+					<th>学校</th>
+					<th>专业</th>
+					<th>身份证号</th>
+					<th>积分</th>
+					{if $_GPC['op']=="warting"}
+					<th style="text-align: center">操作</th>
+					{/if}
+				</tr>
+			</thead>
+			<tbody> 
+                <form action="" method="post" name="form2">
+                    {loop $student_list $index $row}
+                    <tr>
+                        <td>{php echo $index+1}</td>
+                        <td>{$row['name']}</td>
+                        <td>{$row['phone']}</td>	
+                        <td>{if $row['gender']==0} <span class="label label-success">男</span> {else}<span class="label label-danger">女</span>{/if}</td>
+                        <td>{$row['school']}</td>
+                        <td>{$row['major']}</td>
+                        <td>{$row['id_number']}</td>
+                        <td>{$row['integral']}</td>
+                        <td style="text-align: center">
+							{if $_GPC['op']=="warting"}
+								<input type="checkbox" value="{$row['id']}" id="select" name="selected">选取
+							{/if}
+                        </td>
+                    </tr> 
+                    {/loop} 
+                    <input type="hidden" value="{$_W['token']}" name="token">
+                </form>
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+<script>
+	$(function () { 
+        $("[data-toggle='tooltip']").tooltip(); });
+        $('#send').click(function(){
+            var select = new Array();
+            $("input:checkbox[name='selected']:checked").each(function() {
+                select.push($(this).val());
+            });
+			if(select.length < {$task['count']}){
+				var temp=parseInt({$task['count']})-select.length
+				alert("您选取的人数不足,选取了"+select.length+"个人,还需选取"+temp+"个人");
+				return false;
+			}else if(select.length > {$task['count']}){
+				var temp=select.length - parseInt({$task['count']})
+				alert("您选取的人数太多,多选取了"+temp+"个人.");
+				return false;
+			}
+			if(!confirm('提交将不能更改,确定要提交？'))
+				return false;
+			$.ajax({
+				url:"{php echo $this->createWebUrl('apply_detail')}",
+				data:{
+					select:select,
+					id:{$task['id']}
+				},
+				type:"post",
+				dataType:"JSON",
+				success:function(res){
+					if(res.code==0){
+
+					}else if(res.code==1){
+						if(res.val > 0)
+						alert('您选择的男生比活动限制数男生数多'+res.val+"人,请换成女生")
+						else if(res.val < 0)
+							alert('您选择的女生比活动限制女生数多'+Math.abs(res.val)+"人,请换成男生")
+					}
+				}
+			})
+        })
+</script>
+{template 'common/footer'}

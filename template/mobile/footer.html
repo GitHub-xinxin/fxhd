@@ -1,0 +1,80 @@
+		<style>
+			.nav-bottom{
+				text-align: center;
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+				background-color: #F0F0F0;
+		
+			}
+			.nav-bottom  a{
+				padding-top: 0.5em;
+				padding-bottom: 0.5em;
+				display: block;
+				box-shadow: 0 -1px 0 #d2cfcf;
+			}
+			body{
+				padding-bottom:4.5em;
+				height:100%
+			}
+		</style>
+
+			<div class="nav-bottom">
+				<div class="layui-row">
+					{if $menu_count == 1}
+						<div class="layui-col-xs12">
+							<a href="{$menu_info[0]['menu_link']}" data-transition="pop">
+								<img src="{php echo toMedia($menu_info[0]['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+								<div>{$menu_info[0]['menu_name']}</div>
+							</a>
+						</div>
+					{elseif $menu_count == 2}
+						{loop $menu_info $row}
+							<div class="layui-col-xs6">
+								<a href="{$row['menu_link']}" data-transition="pop">
+									<img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+									<div>{$row['menu_name']}</div>
+								</a>
+							</div>
+						{/loop}
+					{elseif $menu_count == 3}
+						{loop $menu_info $row}
+							<div class="layui-col-xs4">
+								<a href="{$row['menu_link']}" data-transition="pop">
+									<img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+									<div>{$row['menu_name']}</div>
+								</a>
+							</div>
+						{/loop}
+					{elseif $menu_count == 4}
+						{loop $menu_info $row}
+							<div class="layui-col-xs3">
+								<a href="{$row['menu_link']}" data-transition="pop">
+									<img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+									<div>{$row['menu_name']}</div>
+								</a>
+							</div>
+						{/loop}
+					{elseif $menu_count == 5}
+						{loop $menu_info $row}
+							<div class="layui-col-xs3" style="width: 20%">
+								<a href="{$row['menu_link']}" data-transition="pop">
+									<img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+									<div>{$row['menu_name']}</div>
+								</a>
+							</div>
+						{/loop}
+					{elseif $menu_count == 6}
+						{loop $menu_info $row}
+							<div class="layui-col-xs2">
+								<a href="{$row['menu_link']}" data-transition="pop">
+									<img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+									<div>{$row['menu_name']}</div>
+								</a>
+							</div>
+						{/loop}
+					{/if}
+				</div>	
+			</div>
+	</body>
+</html>

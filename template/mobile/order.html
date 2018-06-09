@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>我的订单</title>
+        <link rel="stylesheet" href="../addons/ly_fenxiaohuodong/template/mobile/css/jquery.mobile-1.4.5.min.css">
+        <script src="../addons/ly_fenxiaohuodong/template/mobile/layui/layui.js"></script>
+        <link href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css" rel="stylesheet" />
+        <style>
+            .img{
+                width:50px;
+                height: 50px;
+                float: left;
+            }
+            .order{
+                background-color: #009688;
+                width: 100%;
+                height: 3em;
+                color: white;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>  
+        <div class="order">
+            <p style="padding-top:0.8em">已支付订单</p>
+        </div>
+        <div class="layui-collapse" lay-accordion="" style="margin-top: 1.5em">
+            {if !empty($order_list)}
+                {loop $order_list $row}
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">订单编号:{php echo substr($row['ticket'],20)}</h2>
+                        <div class="layui-colla-content layui-show">
+                            <div>
+                                <img class="img" src="{php echo tomedia($row['banner'])}" alt="">
+                                <p style="padding-left:4.5em">{$row['name']}</p>
+                                <p style="padding-left:4.5em"><span class="layui-btn layui-btn-xs">已支付</span>  <span style="padding-left:1em">支付时间：{php echo date('Y-m-d H:m:s',$row['pay_time'])}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                {/loop}
+            {else}
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">暂无支付订单</h2>
+                </div>
+            {/if}
+        </div>
+<script>
+    layui.use(['element', 'layer'], function(){
+        var element = layui.element;
+        var layer = layui.layer;  
+    });
+</script>
+{template 'footer'}

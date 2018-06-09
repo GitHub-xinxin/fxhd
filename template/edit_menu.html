@@ -1,0 +1,212 @@
+{template 'common/header'}
+<style>
+  .form-horizontal{
+    padding-left: 1em
+  }
+</style>
+<ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#">编辑底部菜单</a>
+    </li>
+  </ul>
+      <form class="form-horizontal" method="post">
+        <div class="alert alert-danger" style="margin-left: 10em">
+          <p>常规菜单链接：</p>
+          <p>首页：{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=main&m=ly_fenxiaohuodong&artid={$_GPC['aid']}</p>
+          <p>订单：{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=order&m=ly_fenxiaohuodong&artid={$_GPC['aid']}</p>
+          <p>奖金：{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=bonus&m=ly_fenxiaohuodong&artid={$_GPC['aid']}</p>
+          <p>活动：{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=art&m=ly_fenxiaohuodong&artid={$_GPC['aid']}</p>
+          <p>抢购：{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=payment&m=ly_fenxiaohuodong&artid={$_GPC['aid']}</p>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <span>底部菜单 1</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-6">
+                      <div class="row" style="margin-bottom: 1.9em"> <label for="" class="col-sm-2">菜单名</label> <div class="col-sm-9"><input type="text" value="{$menu_info[0]['menu_name']}" name="menu_name_one" class="form-control"></div></div>
+                      <div class="row" style="margin-bottom: 1.9em"> <label for="" class="col-sm-2">链接</label> <div class="col-sm-9"><input type="text" value="{$menu_info[0]['menu_link']}" name="menu_link_one" class="form-control"></div></div>
+                      <div class="row" style="margin-bottom: 1.9em"> <label for="" class="col-sm-2">显示</label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="menu_display_one">
+                            <option value="1">隐藏</option>
+                            <option {if $menu_info[0]['menu_display'] == 1} selected="selected"{/if} value="0">显示</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="row">
+                        <label for="" class="col-sm-3">菜单图片</label>
+                        <div class="col-sm-9">
+                          {php echo tpl_form_field_image('menu_pic_one',$menu_info[0]['menu_pic']);}
+                        </div>
+                      </div>	
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <span>底部菜单 2</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">菜单名</label> <div class="col-sm-9"><input name="menu_name_two" value="{$menu_info[1]['menu_name']}" type="text" class="form-control"></div></div>
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">链接</label> <div class="col-sm-9"><input value="{$menu_info[1]['menu_link']}" name="menu_link_two" type="text" class="form-control"></div></div>
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">显示</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="menu_display_two">
+                          <option value="1">隐藏</option>
+                          <option {if $menu_info[1]['menu_display'] == 1} selected="selected"{/if} value="0">显示</option>
+                        
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label for="" class="col-sm-3">菜单图片</label>
+                      <div class="col-sm-9">
+                        {php echo tpl_form_field_image('menu_pic_two',$menu_info[1]['menu_pic']);}
+                      </div>
+                    </div>	
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <span>底部菜单 3</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-6">
+                      <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">菜单名</label> <div class="col-sm-9"><input value="{$menu_info[2]['menu_name']}" name="menu_name_three" type="text" class="form-control"></div></div>
+                      <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">链接</label> <div class="col-sm-9"><input  value="{$menu_info[2]['menu_link']}"name="menu_link_three" type="text" class="form-control"></div></div>
+                      <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">显示</label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="menu_display_three">
+                            <option value="1">隐藏</option>
+                            <option {if $menu_info[2]['menu_display'] == 1} selected="selected"{/if} value="0">显示</option>
+                            
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="row">
+                        <label for="" class="col-sm-3">菜单图片</label>
+                        <div class="col-sm-9">
+                          {php echo tpl_form_field_image('menu_pic_three',$menu_info[2]['menu_pic']);}
+                        </div>
+                      </div>	
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <span>底部菜单 4</span>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                  <div class="col-sm-6">
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">菜单名</label> <div class="col-sm-9"><input value="{$menu_info[3]['menu_name']}" name="menu_name_four" type="text" class="form-control"></div></div>
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">链接</label> <div class="col-sm-9"><input value="{$menu_info[3]['menu_link']}" name="menu_link_four" type="text" class="form-control"></div></div>
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">显示</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="menu_display_four">
+                          <option value="1">隐藏</option>
+                          <option {if $menu_info[3]['menu_display'] == 1} selected="selected"{/if} value="0">显示</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label for="" class="col-sm-3">菜单图片</label>
+                      <div class="col-sm-9">
+                        {php echo tpl_form_field_image('menu_pic_four',$menu_info[3]['menu_pic']);}
+                      </div>
+                    </div>	
+                  </div>
+                </div>
+            </div>
+        </div>
+          
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <span>底部菜单 5</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-6">
+                      <div class="row" style="margin-bottom: 1.9em"> <label for="" class="col-sm-2">菜单名</label> <div class="col-sm-9"><input type="text" value="{$menu_info[4]['menu_name']}" name="menu_name_five" class="form-control"></div></div>
+                      <div class="row" style="margin-bottom: 1.9em"> <label for="" class="col-sm-2">链接</label> <div class="col-sm-9"><input type="text" value="{$menu_info[4]['menu_link']}" name="menu_link_five" class="form-control"></div></div>
+                      <div class="row" style="margin-bottom: 1.9em"> <label for="" class="col-sm-2">显示</label>
+                        <div class="col-sm-9">
+                          <select class="form-control" name="menu_display_five">
+                            <option value="1">隐藏</option>
+                            <option {if $menu_info[4]['menu_display'] == 1} selected="selected"{/if} value="0">显示</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="row">
+                        <label for="" class="col-sm-3">菜单图片</label>
+                        <div class="col-sm-9">
+                          {php echo tpl_form_field_image('menu_pic_five',$menu_info[4]['menu_pic']);}
+                        </div>
+                      </div>	
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <span>底部菜单 6</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">菜单名</label> <div class="col-sm-9"><input name="menu_name_six" value="{$menu_info[5]['menu_name']}" type="text" class="form-control"></div></div>
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">链接</label> <div class="col-sm-9"><input value="{$menu_info[5]['menu_link']}" name="menu_link_six" type="text" class="form-control"></div></div>
+                    <div class="row" style="margin-bottom: 1.5em"> <label for="" class="col-sm-2">显示</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="menu_display_six">
+                          <option value="1">隐藏</option>
+                          <option {if $menu_info[5]['menu_display'] == 1} selected="selected"{/if} value="0">显示</option>
+                        
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label for="" class="col-sm-3">菜单图片</label>
+                      <div class="col-sm-9">
+                        {php echo tpl_form_field_image('menu_pic_six',$menu_info[5]['menu_pic']);}
+                      </div>
+                    </div>	
+                  </div>
+                </div>
+            </div>
+        </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <input type="hidden" name="token" value="{$_W['token']}" >
+              <input type="hidden" name="act_id" value="{$_GPC['aid']}" >
+              <button type="submit" class="btn btn-default">确定</button>
+            </div>
+          </div>
+      </form>
+<script>
+  $(function(){
+  
+  })
+</script>
+{template 'common/footer'}

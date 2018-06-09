@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>完善信息</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="../addons/ly_fenxiaohuodong/template/mobile/css/jquery.mobile-1.4.5.min.css">
+	<script src="../addons/ly_fenxiaohuodong/template/mobile/js/jquery.min.js"></script>	
+  <script src="../addons/ly_fenxiaohuodong/template/mobile/js/jquery.mobile-1.4.5.js"></script>
+  <link href="../addons/ly_fenxiaohuodong/template/mobile/css/fxhd.css" rel="stylesheet" />
+  <script src="../addons/ly_fenxiaohuodong/template/mobile/js/jquery.min.js"></script>
+  <script src="../addons/ly_fenxiaohuodong/template/mobile/layer/layer.js"></script>
+  <link href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div data-role="page" id="complete_info" data-dialog="false">
+      <div class="title"><p>这个活动太火爆了,壕礼疯狂送,{$goods['title']}活动火爆进行中</p></div>
+      <div class="price"><p>¥{$goods['true_price']}</p></div>
+      <div class="phone">
+        <p style="padding:1em;font-size: 1em;letter-spacing: 0.05em;">请填写您的手机号和姓名，凭手机号及姓名领取礼品，绝无任何隐性消费</p>
+      </div>
+      <div class="input_info">
+        <input style="width: 60%;" type="text" id="name" placeholder="联系人"> 
+        <input id="phone" type="number"  placeholder="手机号">   
+      </div>
+      <span style="margin-top:1em; background-color:rgb(3, 185,206);color:white;width: 90%;margin-left: 1em;display:block;text-align: center;padding:0.5em 0" id="submit">提交订单</span>
+      <div>
+        <div style="border-left: 3px solid rgb(3, 185,206);font-size: 1.05em;padding-left: 0.7em;margin-left: 0.5em;margin-top:1em;"><p>购买须知</p></div>
+        <div style="padding-left: 0.7em;margin: 0.5em">
+          <span>
+            {php echo html_entity_decode($goods['notice'])}
+          </span>
+        </div>
+      </div>
+    </div>
+  <script>
+    $(function(){
+      //发送注册信息
+			$('#submit').click(function(){
+				var name = $('#name').val()
+				var phone =$('#phone').val()
+
+				if(name == ''){
+					alert('请输入姓名')
+					return false;
+				}
+				if(phone == ''){
+					alert('请输入正确的手机号码')
+					return false;
+				}else{
+					if(!(/^1[34578]\d{9}$/.test(phone))){ 
+						alert("请填写正确的11位电话号码，请重填");  
+						return false; 
+					}
+				}
+				$.post(
+					'{php echo $this->createMobileUrl("register")}',
+					{ name:name,
+						phone:phone,
+            artid:"{$goods['aid']}"
+					},
+					function(res){
+						if(res.code == 0){
+							layer.msg('success')
+							window.location.href = "{php echo $this->createMobileUrl('payment',array('price'=>$goods['true_price'],'artid'=>$goods['aid']))}"
+						}else{
+							alert('error')
+						}
+					},
+					'json'
+				)		
+			})
+    })
+  </script>

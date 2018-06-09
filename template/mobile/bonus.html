@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>我的奖金</title>
+        <link rel="stylesheet" href="../addons/ly_fenxiaohuodong/template/mobile/css/jquery.mobile-1.4.5.min.css">
+        <script src="../addons/ly_fenxiaohuodong/template/mobile/layui/layui.js"></script>
+        <link href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css" rel="stylesheet" />
+        <style>
+            .bonus{
+                background-color: #009688;
+                width: 100%;
+                height: 9.5em;
+                margin: 0 0;
+                color: white
+            }
+            .tx{
+                text-align: right;
+                padding-right: 0.9em;
+                margin-top :0.4em;
+            }
+            .layui-tab-content{
+                padding-left: 0;
+                padding-right: 0;
+            }
+        </style>
+    </head>
+    <body>  
+        <div class="bonus">
+            <p style="margin-left:0.9em;padding-top: 0.5em">我的奖金:</p>
+            <div>
+                <div style="text-align: center;font-size: 1.7em;padding-top: 0.95em">{$total}元</div> 
+                <div class="tx">
+                    {if empty($is_has)}
+                        <button id="apply" class="layui-btn layui-btn-sm layui-btn-warm">申请提现</button>
+                    {else}
+                        <button disabled class="layui-btn layui-btn-sm layui-btn-warm">等待审核</button>
+                    {/if}
+                </div>  
+            </div>
+        </div>
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this" style="width:41%">我的推广</li>
+                <li style="width:41%">我的红包</li>
+            </ul>
+            <div class="layui-tab-content" style="height: auto;">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-collapse" lay-accordion="">
+                        {if !empty($rebate_list)}
+                            {loop $rebate_list $row}       
+                                <div class="layui-colla-item">
+                                    <h2 class="layui-colla-title">推广金额:{$row['fee']}</h2>
+                                    <div class="layui-colla-content">
+                                    <p>下级：{$row['nickname']}</p>
+                                    <p>返利时间：{php echo date('Y-m-d H:m:s',$row['insert_time'])}</p>
+                                    </div>
+                                </div>
+                            {/loop}
+                        {else}
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">暂无返利</h2>
+                            </div>
+                        {/if}
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-collapse" lay-accordion="">
+                        {if !empty($red_list)}
+                            {loop $red_list $row}       
+                                <div class="layui-colla-item">
+                                    <h2 class="layui-colla-title">红包金额:{$row['fee']}</h2>
+                                    <div class="layui-colla-content">
+                                    <p>昵称：{$row['nickname']}</p>
+                                    <p>转发时间：{php echo date('Y-m-d H:m:s',$row['insert_time'])}</p>
+                                    </div>
+                                </div>
+                            {/loop}
+                        {else}
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">暂无返利</h2>
+                            </div>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="padding: 1em 1em">
+           {php echo html_entity_decode($careful)}
+        </div>
+<script>
+    layui.use(['element', 'layer'], function(){
+        var element = layui.element;
+        var layer = layui.layer,$ = layui.jquery;
+
+        $(function(){
+            $('#apply').click(function(){
+                if("{$total}" < 1){
+                    layer.msg('提现金额最低为1元',{icon:6})
+                    return
+                }
+                $.post("{php echo $this->createMobileUrl('bonus')}",{fee:"{$total}",act_id:"{$_GPC['artid']}"},function(res){
+                    layer.msg(res.code);
+                    if(res.code == 0){
+                        layer.msg('申请提交成功，等待审核')
+                        $('#apply').attr('disabled',true).text('等待审核')
+                    }else if(res.code == 1){
+                        layer.msg('申请已提交,请勿重复申请',{icon:5})
+                        $('#apply').attr('disabled',true).text('等待审核')
+                    }else if(res.code ==2){
+                        layer.msg('申请提交失败',{icon:5})
+                        $('#apply').attr('disabled',true).text('等待审核')
+                    } 
+                },'json');
+            })
+        })
+    });
+</script>
+{template 'footer'}
