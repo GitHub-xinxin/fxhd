@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>订单管理</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link rel="stylesheet" type="text/css" href="../addons/ly_fenxiaohuodong/template/mobile/swiper/swiper.min.css" />
+  <script src="../addons/ly_fenxiaohuodong/template/mobile/js/jquery.min.js"></script>
+	<script src="../addons/ly_fenxiaohuodong/template/mobile/swiper/swiper.min.js"></script>
+  <script src="../addons/ly_fenxiaohuodong/template/mobile/layui/layui.js"></script>
+  <link href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css" rel="stylesheet" />
+  <style>
+    .card-content-inner {
+      padding: 0.1rem .75rem;
+      position: relative;
+    }
+    p {
+        margin: 0.5em 0;
+    }
+    .detail{
+      padding-top: 1.6em;
+      padding-left: .5em;
+      height: 5em;
+      overflow: hidden;
+    }
+    .img{
+      width:5em;height: 5em;float: left
+    }
+    .title{
+      color: white;
+      background-color: #009688;
+    }
+  	.swiper-container {
+      width: 100%;
+    }  	
+    .swiper-img{
+      width: 100%;
+      /* height: 14em; */
+    }
+    .img_inco{
+      width: 3em;
+      height: 3em;
+      border-radius: 50%
+    }
+    .layui-tab-content{
+      padding: 0;
+    }
+    .layui-tab-brief{
+      margin: 0;
+    }
+    .card{
+      background-color: white;
+      margin: 0.4em 0;
+    }
+    .card_img{
+      width: 100%;
+      height: 8em;
+    }
+    .layui-tab-title{
+      background-color: #fff
+    }
+
+    body{
+      background-color: #e2e2e2
+    }
+    .card_detail{
+      height: 2.5em;
+      overflow: hidden;
+      font-size: 0.8em;
+      text-indent: 1em;
+      line-height: 1.3em;
+      letter-spacing: 0.03em;
+      padding-left: 0.5em;
+    }
+    .card_people_img{
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+    }
+    .layui-col-xs3{
+      margin-bottom: 0.5em
+    }
+    .kind{
+      color: #5FB878
+    }
+    .class_img{
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+    }
+    .order{
+        background-color: #00aab8;
+        width: 100%;
+        height: 3em;
+        color: white;
+        text-align: center;
+        
+    }
+    .cr{
+				text-align: center;padding: 0.5em 0;
+			}
+  </style>
+</head>
+
+<body>
+    <div class="order">
+        <p style="padding-top:0.8em;margin-top: 0;">发布活动列表</p>
+    </div>
+    <div style="min-height:35em">
+    {if !empty($act_list)}
+      {loop $act_list $index $row}
+      <a href="{php echo $this->createMobileUrl('order_mag',array('actid'=>$row['aid']))}">
+          <div class="card">  
+              <img class="card_img" alt="" src="{php echo tomedia($row['banner'])}">
+              <p class="card_detail">
+                  <span style="font-family: '微软雅黑'">
+                      {$row['sketch']}
+                  </span>
+              </p>
+              <div style="padding: 0.5em 0;" class="layui-row">
+              <div class="layui-col-xs8">
+                  <span style="color: red;font-size: 0.9em;padding: 0 1em;">抢购价<span style="font-size: 1.4em">￥{$row['true_price']}</span>  </span><span style="color: #c2c2c2;font-size: 0.8em">原价 ￥{$row['orig_price']}</span>
+              </div>  
+              <div class="layui-col-xs4">
+                  <a href="{php echo $this->createMobileUrl('order_mag',array('actid'=>$row['aid']))}" class="layui-btn layui-btn-sm layui-btn-danger" style="border-radius: 3em;box-shadow: 1px 1px 1px #FF5722;"><span style="padding:0 1em;">查看订单</span></a>
+              </div>
+              </div>
+          </div>
+      </a>                  
+      {/loop}
+    {else}
+      <div style="text-align: center;margin-top: 1em"><span> 暂无活动</span></div>      
+    {/if}
+    </div>  
+    <div class="cr">
+      <a href="{$cr['url']}"><span style="color: #c2c2c2">©&nbsp;&nbsp;{$cr['name']}</span></a>
+    </div>
+<script>
+  layui.use(['element', 'layer'], function(){
+    var element = layui.element,
+    layer = layui.layer
+  });
+
+</script>

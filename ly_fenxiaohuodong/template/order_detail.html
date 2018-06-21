@@ -1,0 +1,123 @@
+{template 'common/header'}
+<style>
+    th,td{
+        text-align: center
+    }
+    .img{
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+    }
+</style>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="">活动列表</a></li>
+</ul>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <span>活动列表</span>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>头像</th>
+                    <th>姓名</th>
+                    <th>电话</th>
+                    <th>成交金额</th>
+                    <th>支付时间</th>
+                    <th>是否发货</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $order_list $index $row}
+                    <tr>
+                        <td>{php echo $index+1}</td>
+                        <td><img class="img" src="{$row['avatar']}" alt=""></td>
+                        <td>{$row['name']}</td>
+                        <td>{$row['phone']}</td>
+                        <td>{$row['price']}</td>
+                        <td>{php echo date('Y-m-d H:m:s',$row['pay_time'])}</td>
+                        <td>{if $row['is_take'] ==1 } 
+                                {if $row['mode'] == 0}
+                                    <span class="label label-warning">已自提</span> 
+                                {else if $row['mode'] == 1}
+                                    <span class="label label-warning">已发货</span> 
+                                {/if}
+                            {else} 
+                                {if $row['mode'] == 0}
+                                    <span class="label label-success">未领取</span> 
+                                {else if $row['mode'] == 1}
+                                    <span class="label label-success">未发货</span> 
+                                {/if}
+                            {/if}
+                        </td>
+                        <td>
+                            <button class="btn btn-success order" data-aid="{$row['activityid']}" data-id="{$row['id']}" >查看订单</button>
+                        </td>
+                    </tr>
+                {/loop}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					三级返利
+				</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table">
+                    <thead>
+                        <tr>
+                            <th>头像</th>
+                            <th>昵称</th>
+                            <th>手机</th>
+                            <th>返利时间</th>                          
+                            <th>返利金额</th>
+                        </tr> 
+                    </thead>
+                    <tbody id="rebate_detail">
+                    
+                    </tbody>
+                </table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div>
+</div>
+<script>
+    $(function(){
+        $('.order').click(function(){
+            var order_id = $(this).data('id')
+            var aid = $(this).data('aid')
+            $.post("{php echo $this->createWebUrl('order_detail')}",{orderid:order_id,actid:aid},function(res){   
+         
+                $('#rebate_detail').empty()
+                if(res.one_level != '' || res.one_level != false){
+                    var one = $('<tr><td><img src="'+res.one_level.avatar+'" class="img"></td><td>'+res.one_level.nickname+'</td><td>'+res.one_level.phone+'</td><td>'+res.one_level.time+'</td><td>'+res.one_level.fee+'</td></tr>');
+                    $('#rebate_detail').append(one)
+                }
+                if(res.two_level != '' || res.two_level != false){
+                    var two = $('<tr><td><img src="'+res.two_level.avatar+'" class="img"></td><td>'+res.two_level.nickname+'</td><td>'+res.two_level.phone+'</td><td>'+res.two_level.time+'</td><td>'+res.two_level.fee+'</td></tr>');
+                        $('#rebate_detail').append(two)
+                }
+                if(res.three_level != '' || res.three_level != false){
+                    var three = $('<tr><td><img src="'+res.three_level.avatar+'" class="img"></td><td>'+res.three_level.nickname+'</td><td>'+res.three_level.phone+'</td><td>'+res.three_level.time+'</td><td>'+res.three_level.fee+'</td></tr>');
+                    $('#rebate_detail').append(three)
+                }       
+                $('#myModal').modal('show')
+            },'json')
+        })
+    })
+</script>
+{template 'common/footer'}

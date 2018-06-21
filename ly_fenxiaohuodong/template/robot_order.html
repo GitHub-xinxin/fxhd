@@ -1,0 +1,93 @@
+{template 'common/header'}
+<style>
+  .head_img{
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%
+  }
+  th,td{
+    text-align: center
+  }
+</style>
+<ul class="nav nav-tabs">
+  <li class="active">
+      <a href="#">机器人管理</a>
+  </li>
+</ul>
+<div class="panel panel-info">
+  <div class="panel-heading">添加机器人</div>
+  <div class="panel-body">
+      <form action="" method="post" class="form-horizontal" name="form">
+          <div class="form-group"> 
+              <div class="row">
+                  <div class="col-xs-3">
+                      <label class="col-xs-2 control-label">头像</label>
+                      <div class="col-xs-10"> 
+                        {php echo tpl_form_field_image('avatar');}
+                      </div>
+                  </div>
+                  <div class="col-xs-3">
+                      <label class="col-xs-2 control-label">昵称</label>
+                      <div class="col-xs-10"> 
+                          <input type="text" name="nickname" class='form-control' /> 
+                      </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <label class="col-xs-2 control-label">手机</label>
+                    <div class="col-xs-10"> 
+                        <input type="text" name="phone" class='form-control' /> 
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <label class="col-xs-2 control-label">时间</label>
+                    <div class="col-xs-10"> 
+                      {php echo tpl_form_field_date('pay_time',time(),true)}
+                    </div>
+                  </div>
+                  <div class="col-xs-3" style="padding-top: 4em">
+                      <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label"></label>
+                      <div>
+                          <input type="hidden" name="aid" value="{$_GPC['aid']}">
+                          <input type="hidden" name="token" value="{$_W['token']}">
+                          <input type="submit" class="btn btn-success" name="submit" name="form" value="添加" class="btn btn-default">
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form> 
+  </div>
+</div>
+<div class="panel panel-warning">
+  <div class="panel-heading">
+      <span class="panel-title">机器人列表</span>
+  </div>
+  <div class="panel-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>头像</th>
+            <th>昵称</th>
+            <th>手机号</th>
+            <th>购买时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loop $robot_list $index $row}
+          <tr>
+            <td>{php echo $index+1}</td>
+            <td><img class="head_img" src="{php echo tomedia($row['avatar'])}" alt=""></td>
+            <td>{$row['nickname']}</td>
+            <td>{$row['phone']}</td>
+            <td>{php echo date('Y-m-d H:m:s',$row['pay_time'])}</td>
+            <td>
+              <a href="{php echo $this->createWebUrl('robot_order',array('oid'=>$row['id'],'op'=>'del','aid'=>$_GPC['aid']))}" class="btn btn-danger">删除</a>
+            </td>
+          </tr>
+          {/loop}
+        </tbody>
+      </table>
+  </div>
+</div>
+{template 'common/footer'}

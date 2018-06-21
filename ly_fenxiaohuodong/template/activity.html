@@ -1,0 +1,343 @@
+{template 'common/header'}
+<style>
+	.input{
+		padding-left: 12em;
+    	width: 60%;
+	}
+</style>
+<ul class="nav nav-tabs">
+	<li class="active">
+		<a href="#">活动发布</a>
+	</li>
+</ul>
+
+<p style="text-align: center;font-size: 20px;">
+	<span class="label label-success">{$goods['name']}</span>
+</p>
+<style>
+</style>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form class="form-horizontal" method="post">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">活动标题</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="title" value="{$oneactivity['title']}"  placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">邀请语</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="invite" value="{$oneactivity['invite']}"  placeholder="请输入邀请语">
+					<p style="padding-top: 1em;margin-bottom: 0">如：诚邀您参加本活动，机不可失，失不再来哦！</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">活动简述、副标题</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" name="sketch" style="width: 100%;height: 4em;" >{$oneactivity['sketch']}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">是否开启悬浮横图</label>
+				<div class="col-sm-10">
+					<select name="xf_disabled" id="xf" class="form-control">
+						<option {if $oneactivity['xf_disabled'] == 0} selected="selected"{/if} value="0">是</option>
+						<option {if $oneactivity['xf_disabled'] == 1} selected="selected"{/if} value="1">否</option>
+					</select>
+				</div>
+			</div>
+			
+				<div class="form-group" id="xf_info">
+					<label class="col-sm-2 control-label">悬浮横图：</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="xf_info" value="{$oneactivity['xf_info']}"  placeholder="请输入宣传语">
+						<p style="padding-top: 1em;margin-bottom: 0">如：我是商家，我也要发布活动</p>
+					</div>
+				</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">库存</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="stock" value="{$oneactivity['stock']}"  placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">商品原价</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="orig_price" value="{$oneactivity['orig_price']}"  placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">商品抢购价</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="true_price" value="{$oneactivity['true_price']}"  placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">联系电话</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="phone" value="{$oneactivity['phone']}"  placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">是否开启机器人</label>
+				<div class="col-sm-10">
+					<select name="robot" class="form-control">
+						<option {if $oneactivity['robot'] == 0} selected="selected"{/if} value="0">关闭</option>
+						<option {if $oneactivity['robot'] == 1} selected="selected"{/if} value="1">开启</option>
+					</select>
+					<p style="padding-top: 1em;margin-bottom: 0">如开启机器人,请到活动列表,点击操作选择机器人菜单添加机器人</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">发货方式</label>
+				<div class="col-sm-10">
+					<select name="mode" class="form-control">
+						
+						<option {if $oneactivity['mode'] == 0} selected="selected"{/if} value="0">仅自提</option> 			
+						<option {if $oneactivity['mode'] == 1} selected="selected"{/if} value="1">仅快递</option>
+						<option {if $oneactivity['mode'] == 2} selected="selected"{/if} value="2">快递或自提</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">轮播图1：</label>
+				<div class="col-sm-10">
+					{php echo tpl_form_field_image('carousel1',$oneactivity['carousel1']);}
+				</div>
+				<div class="input"><input class="form-control" type="text" name="url1" placeholder="请输入跳转地址http://"></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">轮播图2：</label>
+				<div class="col-sm-10">
+					{php echo tpl_form_field_image('carousel2',$oneactivity['carousel2']);}
+				</div>
+				<div class="input"><input class="form-control" type="text" name="url2" placeholder="请输入跳转地址http://"></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">轮播图3：</label>
+				<div class="col-sm-10">
+					{php echo tpl_form_field_image('carousel3',$oneactivity['carousel3']);}
+				</div>
+				<div class="input"><input class="form-control" type="text" name="url3" placeholder="请输入跳转地址http://"></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">一键拨号图标：</label>
+				<div class="col-sm-10">
+					{php echo tpl_form_field_image('phone_pic',$oneactivity['phone_pic']);}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">客服二维码图标：</label>
+				<div class="col-sm-10">
+					{php echo tpl_form_field_image('kefu_pic',$oneactivity['kefu_pic']);}
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<label class="col-sm-2 control-label">活动须知图标：</label>
+				<div class="col-sm-10">
+					{php echo tpl_form_field_image('notice_pic',$oneactivity['notice_pic']);}
+				</div>
+			</div>
+			<div class="alert alert-danger">提示：推广金随机数设置为 金额(上) / 概率(下)</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">一级推广随机数设置</label>
+				<!-- <div class="col-sm-10">
+					<input type="text" class="form-control" name="first_level" value="{$oneactivity['first_level']}"  placeholder="">
+				</div> -->
+				<label class="col-sm-1 control-label">①</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="one_level_one" value="{$oneactivity['one_level_one']}">
+					<input type="text" class="form-control" name="one_level_one_pro" value="{$oneactivity['one_level_one_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">②</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="one_level_two" value="{$oneactivity['one_level_two']}">
+					<input type="text" class="form-control" name="one_level_two_pro" value="{$oneactivity['one_level_two_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">③</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="one_level_three" value="{$oneactivity['one_level_three']}">
+					<input type="text" class="form-control" name="one_level_three_pro" value="{$oneactivity['one_level_three_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">④</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="one_level_four" value="{$oneactivity['one_level_four']}">
+					<input type="text" class="form-control" name="one_level_four_pro" value="{$oneactivity['one_level_four_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">⑤</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="one_level_five" value="{$oneactivity['one_level_five']}">
+					<input type="text" class="form-control" name="one_level_five_pro" value="{$oneactivity['one_level_five_pro']}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">二级推广随机数设置</label>
+				<!-- <div class="col-sm-10">
+					<input type="text" class="form-control" name="second_level" value="{$oneactivity['second_level']}"  placeholder="">
+				</div> -->
+				<label class="col-sm-1 control-label">①</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="two_level_one" value="{$oneactivity['two_level_one']}">
+					<input type="text" class="form-control" name="two_level_one_pro" value="{$oneactivity['two_level_one_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">②</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="two_level_two" value="{$oneactivity['two_level_two']}">
+					<input type="text" class="form-control" name="two_level_two_pro" value="{$oneactivity['two_level_two_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">③</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="two_level_three" value="{$oneactivity['two_level_three']}">
+					<input type="text" class="form-control" name="two_level_three_pro" value="{$oneactivity['two_level_three_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">④</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="two_level_four" value="{$oneactivity['two_level_four']}">
+					<input type="text" class="form-control" name="two_level_four_pro" value="{$oneactivity['two_level_four_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">⑤</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="two_level_five" value="{$oneactivity['two_level_five']}">
+					<input type="text" class="form-control" name="two_level_five_pro" value="{$oneactivity['two_level_five_pro']}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">三级推广随机数设置</label>
+				<!-- <div class="col-sm-10">
+					<input type="text" class="form-control" name="three_level" value="{$oneactivity['three_level']}"  placeholder="">
+				</div> -->
+				<label class="col-sm-1 control-label">①</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="three_level_one" value="{$oneactivity['three_level_one']}">
+					<input type="text" class="form-control" name="three_level_one_pro" value="{$oneactivity['three_level_one_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">②</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="three_level_two" value="{$oneactivity['three_level_two']}">
+					<input type="text" class="form-control" name="three_level_two_pro" value="{$oneactivity['three_level_two_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">③</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="three_level_three" value="{$oneactivity['three_level_three']}">
+					<input type="text" class="form-control" name="three_level_three_pro" value="{$oneactivity['three_level_three_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">④</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="three_level_four" value="{$oneactivity['three_level_four']}">
+					<input type="text" class="form-control" name="three_level_four_pro" value="{$oneactivity['three_level_four_pro']}">
+				</div>
+				<label class="col-sm-1 control-label">⑤</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" name="three_level_five" value="{$oneactivity['three_level_five']}">
+					<input type="text" class="form-control" name="three_level_five_pro" value="{$oneactivity['three_level_five_pro']}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">返利方式设置</label>
+				<div class="col-sm-10">
+					<select name="rebate" id="" class="form-control">
+						<option {if $oneactivity['rebate'] == 0} selected="selected"{/if} value="0">即时发放</option>
+						<option {if $oneactivity['rebate'] == 1} selected="selected"{/if} value="1">申请审核后发放</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">红包总金额数</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="red_count" value="{$oneactivity['red_count']}"  placeholder="">
+				</div> 
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">红包金额最小值</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="red_min" value="{$oneactivity['red_min']}"  placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">红包金额最大值</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="red_max" value="{$oneactivity['red_max']}"  placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">转发红包设置</label>
+				<div class="col-sm-10">
+					<select name="red_kind" id="" class="form-control">
+						<option {if $oneactivity['red_kind'] == 0} selected="selected"{/if} value="0">转发后发放</option>
+						<option {if $oneactivity['red_kind'] == 1} selected="selected"{/if} value="1">审核后发放</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" style="color:#8e44ad">活动区间：</label>
+				<label class="col-sm-2 control-label">开始时间</label>
+				<div class="col-sm-3">
+					{php echo tpl_form_field_date('start_time',date("Y-m-d H:i:s",$oneactivity['start_time']),true)}
+				</div>
+				<label for="firstname" class="col-sm-2 control-label">结束时间</label>
+				<div class="col-sm-3">
+					{php echo tpl_form_field_date('end_time',date("Y-m-d H:i:s",$oneactivity['end_time']),true)}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">客服二维码：</label>
+				<div class="col-sm-10">
+					{php echo tpl_form_field_image('wxcode',$oneactivity['wxcode']);}
+				</div>
+			</div>
+			<div class="form-group"> <label class="col-sm-2 control-label">奖金注意事项：</label>
+				<div class="col-sm-10">
+					{php echo tpl_ueditor("careful",$oneactivity['careful'])}
+				</div>
+			</div> 
+			<div class="form-group"> <label class="col-sm-2 control-label">活动介绍：</label>
+				<div class="col-sm-10">
+					{php echo tpl_ueditor("introduce",$oneactivity['introduce'])}
+				</div>
+			</div> 
+			<div class="form-group"> <label class="col-sm-2 control-label">活动须知：</label>
+				<div class="col-sm-10">
+					{php echo tpl_ueditor("notice",$oneactivity['notice'])}
+				</div>
+			</div>
+			<div class="form-group"> <label class="col-sm-2 control-label">活动说明：</label>
+				<div class="col-sm-10">
+					{php echo tpl_ueditor("notes",$oneactivity['notes'])}
+				</div>
+			</div>
+			<div class="form-group"> <label class="col-sm-2 control-label">活动流程：</label>
+				<div class="col-sm-10">
+					{php echo tpl_ueditor("flow",$oneactivity['flow'])}
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="token" value="{$_W['token']}" >
+					<input type="hidden" name="shopid" value="{$sid}" >
+					<button type="submit" class="btn btn-default">确定</button>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+</div>
+<script>
+	$(function(){
+		if("{$oneactivity['xf_disabled']}" == 0){
+			$('#xf_info').show()
+		}else{
+			$('#xf_info').hide()
+		}
+		$('#xf').change(function(){
+			if($(this).val() == 0){
+				$('#xf_info').show()
+			}else if($(this).val() == 1){
+				$('#xf_info').hide()
+			}	
+		})
+	})
+</script>
+{template 'common/footer'}

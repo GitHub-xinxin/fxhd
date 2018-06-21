@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[分销活动商城]]></name>
+		<identifie><![CDATA[ly_fenxiaohuodong]]></identifie>
+		<version><![CDATA[1.007]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[乐摇实验]]></ability>
+		<description><![CDATA[乐摇趣闻小实验]]></description>
+		<author><![CDATA[ly_dicyan]]></author>
+		<url><![CDATA[http://bbs.we7.cc/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="shortvideo" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="qr" />
+			<message type="trace" />
+			<message type="click" />
+			<message type="view" />
+			<message type="merchant_order" />
+		</subscribes>
+		<handles>
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="shortvideo" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="qr" />
+			<message type="trace" />
+			<message type="click" />
+			<message type="merchant_order" />
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="入口" do="art" state="" direct="false" />
+			
+		</cover>
+		<rule>
+			<entry title="回复规则" do="huifu" state="" direct="false" />
+		</rule>
+		<menu>
+			<entry title="收集信息列表" do="info" state="" direct="false" />
+			<entry title="店铺管理" do="shops" state="" direct="false" />
+			<entry title="分类管理" do="category" state="" direct="false" />
+			<entry title="商品管理" do="product" state="" direct="false" />
+			<entry title="订单管理" do="order_web_mag" state="" direct="false" />
+			<entry title="用户管理" do="users_mag" state="" direct="false" />
+			<entry title="提现管理" do="rebate_mag" state="" direct="false" />
+			<entry title="红包管理" do="red_mag" state="" direct="false" />
+			<entry title="版权管理" do="copyright_mag" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

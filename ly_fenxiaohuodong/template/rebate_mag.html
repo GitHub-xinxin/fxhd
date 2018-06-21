@@ -1,0 +1,112 @@
+{template 'common/header'}
+<style>
+    th,td,tr{
+        text-align: center
+    }
+    .ava_img{
+        height: 2em;
+        width: 2em;
+        border-radius: 50%
+    }
+</style>
+<ul class="nav nav-tabs">
+    <li {if $operation == "wait"} class="active" {/if}>
+        <a href="{php echo $this->createWebUrl('rebate_mag',array('op'=>'wait'))}">申请人员</a>
+    </li>
+    <li {if $operation == "success"} class="active" {/if}>
+        <a href="{php echo $this->createWebUrl('rebate_mag',array('op'=>'success'))}">返利成功</a>
+    </li>
+    <li {if $operation == "error"} class="active" {/if}>
+        <a href="{php echo $this->createWebUrl('rebate_mag',array('op'=>'error'))}">返利失败</a>
+    </li>
+</ul>
+<div class="panel panel-info">
+    <div class="panel-heading">筛选</div>
+    <div class="panel-body">
+        <form action="" method="post" class="form-horizontal" name="form">
+            <div class="form-group"> 
+                <div class="row">
+                    <div class="col-xs-9">
+                        <label class="col-xs-2 control-label">搜索人员</label>
+                        <div class="col-xs-10"> 
+                            <input type="text" name="keyword" class='form-control' placeholder='可根据人员名称、电话进行模糊搜索' value="{$keyword}" /> 
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label"></label>
+                        <div>
+                            <button type="button" class="btn btn-default">总记录数：{$total}</button> 
+                            <input type="hidden" name="token" value="{$_W['token']}">
+                            <input type="submit" name="submit" name="form" value="搜索" class="btn btn-default"><i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span>
+            {if $operation =='wait'}
+                申请列表
+            {elseif $operation == 'success'}
+                返利成功列表
+            {elseif $operation == 'error'}
+                返利失败列表
+            {/if}
+        </span>
+        <!-- <span style="padding-left:4vmin"><a class="btn btn-warning btn-sm" href="{php echo $this->createWebUrl('udownload')}">数据导出</a></span> -->
+    </div>
+    <div class="panel-body table-responsive">
+        <table class="table table-hover table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>昵称</th>
+                    <th>头像</th>
+                    <th>电话</th>
+                    <th>返利金额</th>
+                    <th>申请时间</th>
+                    <th style="text-align: center">操作</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {loop $list $index $row}
+                <tr>
+                    <td>{php echo $index+1}</td>
+                    <td>{$row['nickname']}</td>
+                    <td><img class="ava_img" src="{php echo tomedia($row['avatar'])}" alt=""></td>
+                    <td>{$row['phone']}</td>	
+                    <td>{$row['fee']}</td>
+                    <td>{php echo date('Y-m-d H:m:s',$row['insert_time'])}</td>
+                    <td style="text-align: center"> 
+                        {if $row['status'] == 0 || $row['status'] == 2}
+                            <button class="btn btn-success apply" id="btn{$row['id']}"  data-fee="{$row['fee']}" data-userid="{$row['userid']}" data-rid = "{$row['id']}">同意返利</button>
+                        {elseif $row['status'] == 1}
+                            <button class="btn btn-danger" disabled >返利成功</button>
+                        {/if}
+                    </td>
+                </tr> 
+                {/loop} 
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</div>
+<script>
+    $(function(){
+        $('.apply').click(function(){
+            $.post("{php echo $this->createWebUrl('rebate_detail')}",{fee:$(this).data('fee'),userid:$(this).data('userid'),rid:$(this).data('rid')},function(res){
+                if(res.code == 0){
+                    alert('返利成功')
+                    $('#btn'+res.btn).attr('disabled',true);
+                }else if(res.code == 1){
+                    alert('返利失败')
+                    location.reload()
+                }
+            },'json')
+        })
+    })
+</script>
+{template 'common/footer'}

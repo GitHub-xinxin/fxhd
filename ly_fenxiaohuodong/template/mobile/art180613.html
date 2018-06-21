@@ -1,0 +1,262 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>{$goods['title']}</title>
+	<!-- {php echo register_jssdk(false);}  -->
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="apple-mobile-web-app-capable" content="no" />
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="../addons/ly_fenxiaohuodong/template/mobile/swiper/swiper.min.css" />
+	<script src="../addons/ly_fenxiaohuodong/template/mobile/swiper/swiper.min.js"></script>
+	<script src="../addons/ly_fenxiaohuodong/template/mobile/layui/layui.js"></script>
+	<link href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css" rel="stylesheet" />
+	<script src="../addons/ly_fenxiaohuodong/template/mobile/js/jquery.min.js"></script>
+	<link href="../addons/ly_fenxiaohuodong/template/mobile/css/fxhd.css" rel="stylesheet" />
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script>
+		setTimeout(function(){
+			wx.config({
+				debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				appId: 'wxa316d1ce30f2c952', // 必填，公众号的唯一标识
+				timestamp: "{$timestamp}", // 必填，生成签名的时间戳
+				nonceStr: "{$noncestr}", // 必填，生成签名的随机串
+				signature: "{$signature}",// 必填，签名
+				jsApiList: [
+					'checkJsApi',
+					'onMenuShareTimeline',
+					'onMenuShareAppMessage',
+					'onMenuShareQQ',
+					'onMenuShareWeibo',
+					'hideMenuItems',
+					'showMenuItems',
+					'hideAllNonBaseMenuItem',
+					'showAllNonBaseMenuItem',
+					'translateVoice',
+					'startRecord',
+					'stopRecord',
+					'onRecordEnd',
+					'playVoice',
+					'pauseVoice',
+					'stopVoice',
+					'uploadVoice',
+					'downloadVoice',
+					'chooseImage',
+					'previewImage',
+					'uploadImage',
+					'downloadImage',
+					'getNetworkType',
+					'openLocation',
+					'getLocation',
+					'hideOptionMenu',
+					'showOptionMenu',
+					'closeWindow',
+					'scanQRCode',
+					'chooseWXPay',
+					'openProductSpecificView',
+					'addCard',
+					'chooseCard',
+					'openCard',
+					'openAddress'
+				] // 必填，需要使用的JS接口列表
+			});
+			wx.ready(function () {
+				sharedata = {
+					title: "我是{$user_info['nickname']}",
+					desc: "{$goods['invite']}",
+					link: "{$_W['siteurl']}&parentid="+"{$user['id']}",
+					// imgUrl: '{php echo tomedia($goods["banner"])}',
+					imgUrl:  "{$user_info['avatar']}",
+					success: function(){
+						$.post("{php echo $this->createMobileUrl('share_action')}",{aid:"{$artid}"},function(res){
+			
+							if(res.code == 0){
+								layer.msg('转发成功，红包已经发送到您账户',{icon:6})
+							}else if(res.code ==1){
+								layer.msg('红包发送失败',{icon:5})
+							}else if(res.code == 2){
+								// layer.msg('转发成功，红包待审核后发送到您账户',{icon:6})
+							}else if(res.code == 3){
+								// layer.msg('很遗憾，分享红包数已经发送完了',{icon:5})
+							}else if(res.code == 4){
+								// layer.msg('很遗憾，您已经领取过红包了哦',{icon:5})
+							}
+						},'json')
+					}
+				};
+				wx.onMenuShareAppMessage(sharedata);
+			});
+		},100)
+		
+	</script>
+
+</head>
+<body>
+	<div class="headers">
+		{if !empty($parent_info)}
+			<div style="padding-left:1em"><img class="headers-tx" src="{$parent_info['avatar']}"></div>
+			<div class="headers-name">{$parent_info['nickname']}</div>
+			<div class="headers-hy" id="headers-hy">{$goods['invite']}</div>
+		{else}
+			<div style="padding-left:1em"><img class="headers-tx" src="{$user_info['avatar']}"></div>
+			<div class="headers-name">{$user_info['nickname']}</div>
+			<div class="headers-hy" id="headers-hy">{$goods['invite']}</div>
+		{/if}
+	</div>
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<a href="{$goods['url1']}"><img src="{php echo tomedia($goods['carousel1'])}" class="swiper-img"  alt=""></a>
+			</div>
+			<div class="swiper-slide">
+				<a href="{$goods['url2']}"><img src="{php echo tomedia($goods['carousel2'])}" class="swiper-img"  alt=""></a>
+			</div>
+			<div class="swiper-slide">
+				<a href="{$goods['url3']}"><img src="{php echo tomedia($goods['carousel3'])}" class="swiper-img"  alt=""></a>
+			</div>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div> 
+	<div class="jianshu">
+		<div style="box-shadow:0px 5px 5px rgb(180,180,180);width: 100%;height: auto;background-color: white;">
+			<div style="height: auto;padding: 1em 1em;border-bottom: 1px solid rgb(0,0,0,0.2)">
+				{$goods['title']}
+			</div>
+			<div style="position: relative;">
+				<span style="color: red;position: absolute;left: 18.8em;top:-1.1em;font-size: 1em">原价 ￥{$goods['orig_price']}元</span>
+			</div>
+			<div style="height: auto;padding: 1em 1em;color: rgba(0,0,0,0.4);font-size: 0.9em;">
+				截至时间:{php echo date('Y-m-d H:m:s',$goods['end_time'])}
+				<a href="{php echo $this->createMobileUrl('payment',array('price'=>$goods['true_price'],'artid'=>$goods['id']))}" style="float: right;margin-left: 0.5em;position: relative;top: -0.18em;left:0.18em;border-radius: 1vw;color: white;width: 11.5vw;height: 6vw;background-color:rgb(3, 185,206);line-height: 6.3vw;padding-left:1em">抢购</a>
+				<span style="float: right;color: red;">￥{$goods['true_price']}元</span>
+			</div>
+		</div>				
+	</div>
+	<div style="width: 100%;height: auto;margin-top: 2vw;background-color: white;box-shadow:0px 5px 5px rgb(180,180,180);">
+		<div style="padding: 0.7em 1em;border-bottom: 1px solid rgba(0,0,0,0.2);">
+			活动介绍
+		</div>
+		<div>
+			{php echo html_entity_decode($goods['introduce'])}
+		</div>
+	</div>
+	<div id="xz" style="width: 100%;height: auto;margin-top: 2vw;background-color: white;box-shadow:0px 5px 5px rgb(180,180,180);">
+		<div style="padding: 0.7em 1em;border-bottom: 1px solid rgba(0,0,0,0.2);">
+			活动须知
+		</div>				
+		<div>
+			<div class="item-detail item-detail-copyright" style="padding: 1em 1em;">
+				<div style="line-height: 20px;">
+					{php echo html_entity_decode($goods['notice'])}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="width: 100%;height: auto;margin-top: 2vw;background-color: white;box-shadow:0px 5px 5px rgb(180,180,180);">
+		<div style="padding: 0.7em 1em;border-bottom: 1px solid rgba(0,0,0,0.2);">
+			活动流程：
+		</div>
+		<div style="line-height: 20px; font-size: 20px;padding: 1em;text-align: center;">
+				{php echo html_entity_decode($goods['flow'])}
+		</div>
+	</div>
+	<div style="width: 100%;height: auto;margin-top: 2vw;background-color: white;box-shadow:0px 5px 5px rgb(180,180,180);">
+		<div style="padding: 0.7em 1em;border-bottom: 1px solid rgba(0,0,0,0.2);">
+			活动说明：
+		</div>
+		<div style="line-height: 20px; font-size: 20px;padding: 1em;text-align: center;">
+				{php echo html_entity_decode($goods['notes'])}
+		</div>
+	</div>
+	<div style="width: 100%;height: auto;margin-top: 2vw;background-color: white;box-shadow:0px 5px 5px rgb(180,180,180);">
+		<div style="padding: 0.7em 1em;border-bottom: 1px solid rgba(0,0,0,0.2);">
+			购买记录 <span style="padding-left: 1em;font-size:0.7em">总购买人数:{php echo count($orderlist)}人</span>
+		</div>
+		<div style="width: 100%;height: auto;background-color: white;">
+			<ul  style="color: #cccccc">
+				{loop $orderlist $index $row}
+					<li style="padding: 0.5em 2em;position: relative;">
+						<div style="position: relative;"><img style="width: 12vw;height: 12vw;border-radius: 10vw;" src="{$row['avatar']}"></div>
+						<div style="position: absolute;top: 3vw;left: 23vw;">{$row['nickname']}</div>
+						<div style="position: absolute;top: 10vw;left: 23vw;font-size: 0.8em">{php echo substr_replace($row['phone'],'****',3,4)}</div>
+						<div style="position: absolute;top: 10vw;left: 48vw;font-size: 0.8em;">已支付</div>
+						<div style="position: absolute;top: 10vw;right: 3vw;font-size: 0.8em">{php echo date('Y-m-d H:m:s',$row['pay_time'])}</div>
+					</li>
+				{/loop}
+			</ul>
+		</div>
+		<div style="text-align: center;padding: 1em 0;">
+			<a href="{$goods['tech_url']}"><span style="color: #c2c2c2">©&nbsp;&nbsp;{$goods['tech_support']}</span></a>
+		</div>
+	</div>
+	
+	<div class="fixedbuttons">
+		<!-- 右侧菜单 -->
+		<a  href="tel:{$goods['phone']}">
+			<img src="{php echo tomedia($goods['phone_pic'])}" alt="">
+		</a>
+		<span id="kefu"  data-transition="pop">
+			<img src="{php echo tomedia($goods['kefu_pic'])}" alt="">
+		</span>
+		<a href="#xz">
+			<img src="{php echo tomedia($goods['notice_pic'])}" alt="">
+		</span>
+	</div>
+	{if $goods['xf_disabled'] == 0}
+		<div id="shangjiahead" style="position: fixed;z-index: 999;top: 15vw;width: 100%;background: rgba(50,50,50,0.7);color: #fff;/*opacity: 0.8;*/padding: 0.5em 1em;text-shadow: none;text-align: center;height: 6vw;">
+			<img id="quxiaofabu" style="width: 6vw;height: 6vw;position: absolute;left: 5vw;top: 2vw;" src="../addons/ly_fenxiaohuodong/template/mobile/img/quxiao.png">
+			
+			<div style="width:3em"><p style="position: absolute;left: 15vw;top: 2vw;color: #fff; font-weight: 300;">{$goods['xf_info']}</p></div>
+			<a href="{php echo $this->createMobileUrl('act_register')}"  data-transition="pop" style="color: white;position: absolute;right: 10.5vw;width: 15vw;height: 6vw;background-color: #00aab8;border-radius: 1vw;line-height: 6.2vw;">
+			报名
+			</a>
+		</div>
+	{/if}
+	<!-- <div id="liucheng"><div style="margin:0.5em">{php echo html_entity_decode($goods['flow'])}</div></div> -->
+	<script>
+		layui.use(['layer', 'form'], function(){
+			var form = layui.form,
+			layer = layui.layer;
+		})
+		$(function(){
+			// $('#liucheng').hide()
+			var shangjiahead=$("#shangjiahead")
+			$(document).scroll(function() {
+				var t = document.documentElement.scrollTop || document.body.scrollTop; 
+				if(t==0){
+					shangjiahead.css({
+						top: "15vw"
+					});
+				}else{
+					shangjiahead.css({
+						top: "1vw"
+					});
+				}	
+			});
+		
+			$('#kefu').click(function(){
+				layer.open({
+					type: 1,
+					offset: ['70px', '0px'],
+					content: '<div style = "margin:0.5em"><img style="width:100%;" src="{php echo tomedia($goods["wxcode"])}" alt=""></div>',
+					title:'<div style="padding-left:7em"><span>客服二维码</span></div>'
+				});
+			})
+
+			$("#quxiaofabu").click(function(){
+				$("#shangjiahead").hide();
+			});
+			
+			var mySwiper = new Swiper ('.swiper-container', {
+				loop: true,
+				pagination: {
+					el: '.swiper-pagination',
+				},
+				effect : 'fade',
+				autoplay:true
+			}) 	
+		})
+	</script>
+{template 'footer'}

@@ -1,0 +1,31 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="#">版权管理</a>
+    </li>
+</ul>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <span>版权管理</span>
+    </div>
+    <div class="panel-body">
+        <form action="" method="POST">
+            <div class="form-group">
+				<label class="col-sm-2 control-label">版权或技术支持</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" name="name" value="{$copyr['name']}"  placeholder="">
+				</div>
+				<label class="col-sm-2 control-label">跳转链接</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" name="url" value="{$copyr['url']}"  placeholder="">
+				</div>
+			</div>
+            <input type="hidden" name="token" value="{$_W['token']}">
+            <input type="hidden" name="id" value="{$copyr['id']}">
+            <input type="submit" name="submit" value="确定" class="btn btn-success">
+        </form>
+    </div>
+</div>
+
+{template 'common/footer'}

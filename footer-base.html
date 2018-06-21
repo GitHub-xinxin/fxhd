@@ -1,0 +1,27 @@
+</div>
+	<div class="container-fluid footer text-center" role="footer">	
+		<div class="friend-link">
+			{if empty($_W['setting']['copyright']['footerright'])}
+				<a href="#">微信开发</a>
+				<a href="#">系统定制</a>
+				<a href="#">网站设计</a>
+				<a href="#">品牌设计</a>
+			{else}
+				{$_W['setting']['copyright']['footerright']}
+			{/if}
+		</div>
+		<div class="copyright">{if empty($_W['setting']['copyright']['footerleft'])}Powered by <a href="http://www.we7.cc"><b> ECMS易众科技All Rights Reserved</b></a><a href="http://www.ruyincms.com">www.ruyincms.com</a>{else}{$_W['setting']['copyright']['footerleft']}{/if}</div>
+		{if !empty($_W['setting']['copyright']['icp'])}<div>备案号：<a href="http://www.miitbeian.gov.cn" target="_blank">{$_W['setting']['copyright']['icp']}</a></div>{/if}
+	</div>
+	{if !empty($_W['setting']['copyright']['statcode'])}{$_W['setting']['copyright']['statcode']}{/if}
+	{if !empty($_GPC['m']) && !in_array($_GPC['m'], array('keyword', 'special', 'welcome', 'default', 'userapi')) || defined('IN_MODULE')}
+	<script>
+		if(typeof $.fn.tooltip != 'function' || typeof $.fn.tab != 'function' || typeof $.fn.modal != 'function' || typeof $.fn.dropdown != 'function') {
+			require(['bootstrap']);
+		}
+	</script>
+	{/if}
+	</div>
+	
+</body>
+</html>

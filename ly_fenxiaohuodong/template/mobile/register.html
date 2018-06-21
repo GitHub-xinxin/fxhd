@@ -1,0 +1,197 @@
+
+{template 'common/header'}
+<link href="../addons/ly_fenxiaohuodong/template/mobile/css/fxhd.css" rel="stylesheet" />
+<script src="../addons/ly_fenxiaohuodong/template/mobile/layui/layui.js"></script> 
+<link href="../addons/ly_fenxiaohuodong/template/mobile/layui/css/layui.css" rel="stylesheet" />
+<style>
+  .layui-form-item {
+    margin-bottom: 0;
+  }
+  .layui-input-block {
+      margin-left: 6em;
+      padding-right: 1em
+  }
+
+</style>
+    <div data-role="page" id="complete_info" data-dialog="false">
+      <div class="title"><p>{$goods['title']}</p></div>
+      <div class="price"><p style="color: red">¥{$goods['true_price']}</p></div>
+      <div class="phone">
+        <p style="padding:1em;font-size: 1em;letter-spacing: 0.05em;">请正确填写您的手机号和姓名，凭手机号及姓名领取或发货，绝无任何隐性消费</p>
+      </div>
+      <form action="" class="layui-form" method="POST" onsubmit="return check()">
+        <div class="input_info" style="margin-top: 1em">
+          <div class="layui-form-item">
+            <label class="layui-form-label">联系人</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" id="name" value="{$user['name']}" placeholder="联系人"> 
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input id="phone" name="phone" type="number" value="{$user['phone']}"  placeholder="手机号"> 
+            </div>
+          </div>
+           
+          {if $goods['mode'] != 0}
+            {if $goods['mode'] == 2}
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="width: 100%;margin: 0">
+                  <select name="mode" lay-filter ="mo">
+                      <option selected="" value="1">快递</option>
+                      <option value="0">自提</option>
+                  </select>
+                </div>
+              </div>
+            {/if}
+            <div id="addre">
+              {php echo tpl_app_form_field_district('addres',array('province' => $user['province'],'city' => $user['city'],'district' => $user['district']));} 
+              <input type="text" name="address" id="district" value="{$user['address']}" placeholder="详细地址">
+            </div>
+            
+          {/if}
+          </div>   
+        </div>
+        <input type="hidden" name="token" value="{$_W['token']}">
+        <input type="hidden" name="artid" value="{$_GPC['artid']}">
+        <input style="margin-top:1em; background-color:rgb(3, 185,206);color:white;width: 90%;margin-left: 1em;" name="submit" type="submit" value="提交订单">
+      </form>
+      <div>
+        <div style="border-left: 3px solid rgb(3, 185,206);font-size: 1.05em;padding-left: 0.7em;margin-left: 0.5em;margin-top:1em;"><p>购买须知</p></div>
+        <div style="padding-left: 0.7em;margin: 0.5em">
+          <span>
+            {php echo html_entity_decode($goods['notice'])}
+          </span>
+        </div>
+      </div>
+    </div>
+
+  <script>
+    document.title = "抢购"
+    function check(){
+      var name = $('#name').val()
+				var phone =$('#phone').val()
+
+				if(name == ''){
+					alert('请输入姓名')
+					return false;
+				}
+				if(phone == ''){
+					alert('请输入正确的手机号码')
+					return false;
+				}else{
+					if(!(/^1[34578]\d{9}$/.test(phone))){ 
+						alert("请填写正确的11位电话号码，请重填");  
+						return false; 
+					}
+				}
+    }
+  </script>
+ 
+  <script>
+      layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form,
+        $ = layui.jquery;
+        form.on('select(mo)', function(data){
+          if(data.value == 0)
+            $('#addre').hide()
+          else if(data.value == 1)
+            $('#addre').show()
+        })
+      });
+      </script>
+		<style>
+        .nav-bottom{
+          text-align: center;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          background-color: #F0F0F0;
+      
+        }
+        .nav-bottom  a{
+          padding-top: 0.5em;
+          padding-bottom: 0.5em;
+          display: block;
+          box-shadow: 0 -1px 0 #d2cfcf;
+        }
+        body{
+          padding-bottom:4.5em;
+          height:100%;
+        }
+        .cr{
+          text-align: center;padding: 0.5em 0;
+        }
+        .font{
+          margin-top: 0.35em;
+          font-size: 0.85em
+        }
+      </style>
+        {if empty($crr)}
+          <div class="cr">
+            <a href="{$cr['url']}"><span style="color: #c2c2c2">©&nbsp;&nbsp;{$cr['name']}</span></a>
+          </div>
+        {/if}
+        <div style="height:11vh">
+
+        </div>
+        <div class="nav-bottom">
+          <div class="layui-row">
+            {if $menu_count == 1}
+              <div class="layui-col-xs12">
+                <a href="{$menu_info[0]['menu_link']}" data-transition="pop">
+                  <img src="{php echo toMedia($menu_info[0]['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+                  <div class="font">{$menu_info[0]['menu_name']}</div>
+                </a>
+              </div>
+            {elseif $menu_count == 2}
+              {loop $menu_info $row}
+                <div class="layui-col-xs6">
+                  <a href="{$row['menu_link']}" data-transition="pop">
+                    <img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+                    <div class="font">{$row['menu_name']}</div>
+                  </a>
+                </div>
+              {/loop}
+            {elseif $menu_count == 3}
+              {loop $menu_info $row}
+                <div class="layui-col-xs4">
+                  <a href="{$row['menu_link']}" data-transition="pop">
+                    <img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+                    <div class="font">{$row['menu_name']}</div>
+                  </a>
+                </div>
+              {/loop}
+            {elseif $menu_count == 4}
+              {loop $menu_info $row}
+                <div class="layui-col-xs3">
+                  <a href="{$row['menu_link']}" data-transition="pop">
+                    <img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+                    <div class="font">{$row['menu_name']}</div>
+                  </a>
+                </div>
+              {/loop}
+            {elseif $menu_count == 5}
+              {loop $menu_info $row}
+                <div class="layui-col-xs3" style="width: 20%">
+                  <a href="{$row['menu_link']}" data-transition="pop">
+                    <img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+                    <div class="font">{$row['menu_name']}</div>
+                  </a>
+                </div>
+              {/loop}
+            {elseif $menu_count == 6}
+              {loop $menu_info $row}
+                <div class="layui-col-xs2">
+                  <a href="{$row['menu_link']}" data-transition="pop">
+                    <img src="{php echo toMedia($row['menu_pic'])}" style="width: 2em;height: 2em;" alt="">
+                    <div class="font">{$row['menu_name']}</div>
+                  </a>
+                </div>
+              {/loop}
+            {/if}
+          </div>	
+        </div>
+    </body>
+  </html>
